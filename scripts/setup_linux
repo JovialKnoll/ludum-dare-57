@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd ../src/
+python3.13 -m venv venv
+source venv/bin/activate
+pip install setuptools
+pip install -r requirements.txt
+deactivate
