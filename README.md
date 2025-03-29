@@ -1,2 +1,2 @@
-# JovialTemplate
-A template for starting projects based on JovialEngine.
+# ludum-dare-57
+A Game for Ludum Dare 57
