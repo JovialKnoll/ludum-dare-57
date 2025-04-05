@@ -67,6 +67,7 @@ GREY = (128, 128, 128)
 LIGHT_GREY = (200, 200, 200)
 WATER_BLUE = (0, 23, 198)
 SKY_BLUE = (123, 217, 246)
+DARK_RED = (128, 0, 0)
 
 _location = '.'
 if getattr(sys, 'frozen', False):
@@ -95,6 +96,7 @@ TITLE_SCREEN = os.path.join(LOGOS_DIRECTORY, 'title_screen.png')
 SPRITES_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'sprites')
 SHIP = os.path.join(SPRITES_DIRECTORY, 'ship.png')
 SHOT = os.path.join(SPRITES_DIRECTORY, 'shot.png')
+SHOT_MASK = os.path.join(SPRITES_DIRECTORY, 'shot_mask.png')
 
 BACKGROUNDS_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'backgrounds')
 

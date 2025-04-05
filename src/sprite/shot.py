@@ -7,7 +7,8 @@ import utility
 class Shot(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
-    _COLLISION_MASK_LOCATION = constants.SHIP
+    _IMAGE_SECTION_SIZE = (5, 5)
+    _COLLISION_MASK_LOCATION = constants.SHOT_MASK
     _COLLISION_MASK_ALPHA_OR_COLORKEY = constants.COLORKEY
 
     _JERK = 0.001 * 0.0004
@@ -20,17 +21,21 @@ class Shot(jovialengine.GameSprite):
         'angle',
         '_accel',
         '_speed',
+        '_age',
     )
 
     def _start(self, mode):
         self.angle: float = mode.arrow_angle
         self._accel = self._INITIAL_ACCEL
         self._speed = self._INITIAL_SPEED
+        self._age = 0
 
     def set_angle(self, angle):
-        self.angle = angle
+        if not self.is_unresponsive():
+            self.angle = angle
 
     def update(self, dt, camera):
+        # movement
         old_accel = self._accel
         self._accel += dt * self._JERK
         self._accel = min(self._accel, self._MAX_ACCEL)
@@ -40,3 +45,10 @@ class Shot(jovialengine.GameSprite):
         distance = min(distance, dt * self._MAX_SPEED)
         vec = utility.angle_vector(distance, self.angle)
         self.rect.move_ip(vec.x, vec.y)
+        # aging
+        self._age += dt
+        if self.is_unresponsive():
+            self.seq = 1
+
+    def is_unresponsive(self):
+        return self._age > 1000

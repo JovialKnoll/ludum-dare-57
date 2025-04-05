@@ -48,8 +48,8 @@ class ModePlay(ModeScreenSize):
         self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
         angle_basis = self._ANGLE_BASIS
-        if self._shots:
-            angle_basis = self._ANGLE_BASIS / 2
+        #if self._shots:
+        #    angle_basis = self._ANGLE_BASIS / 2
         accel_amount = dt * angle_basis * 2
         extra_clamp = None
         if self._input_frame.get_input_state(0, constants.EVENT_LEFT) == 1:
@@ -125,8 +125,9 @@ class ModePlay(ModeScreenSize):
             self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, 0))
             self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (-1, -1))
             self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, -1))
-            self._draw_shot_trail(screen, constants.GREY, shot.angle, self._SHOT_INIT_DISTANCE - 2, center + (0, -1))
-            self._draw_shot_trail(screen, constants.GREY, shot.angle, self._SHOT_INIT_DISTANCE - 2, center)
+            color = constants.DARK_GREY if shot.is_unresponsive() else constants.GREY
+            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_INIT_DISTANCE - 2, center + (0, -1))
+            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_INIT_DISTANCE - 2, center)
 
     def _cleanup(self):
         self._shots.empty()
