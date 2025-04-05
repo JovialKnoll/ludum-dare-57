@@ -15,7 +15,7 @@ class Shot(jovialengine.GameSprite):
     )
 
     def _start(self, mode):
-        self.angle = mode.arrow_angle
+        self.angle: float = mode.arrow_angle
 
     def update(self, dt, camera):
         distance = dt * 0.001 * 20
