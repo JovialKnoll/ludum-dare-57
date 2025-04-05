@@ -8,8 +8,10 @@ from sprite import Ship
 class ModePlay(ModeScreenSize):
     _HORIZON = 40
     _ANGLE_BASIS = 0.001 * 90
+    _MAX_SHOTS = 1
     __slots__ = (
         '_ship',
+        '_shots',
         '_draw_arrow',
         '_arrow_vel',
         '_arrow_angle',
@@ -25,6 +27,7 @@ class ModePlay(ModeScreenSize):
 
         self._ship = Ship(midbottom=(constants.SCREEN_SIZE[0] // 2, self._HORIZON))
         self._ship.start(self)
+        self._shots = pygame.sprite.Group()
         self._draw_arrow = True
         self._arrow_vel = 0
         self._arrow_angle = 90
@@ -77,3 +80,7 @@ class ModePlay(ModeScreenSize):
             start = pygame.Vector2(self._ship.rect.midbottom) + offset
             end = start + vec
             pygame.draw.line(screen, "red", start, end)
+
+    def _cleanup(self):
+        self._shots.empty()
+        del self._ship
