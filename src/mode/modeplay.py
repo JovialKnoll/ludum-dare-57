@@ -32,6 +32,13 @@ class ModePlay(ModeScreenSize):
         self._arrow_vel = 0
         self._arrow_angle = 90
 
+    def _take_frame(self, input_frame):
+        if input_frame.was_input_pressed(constants.EVENT_A):
+            if len(self._shots) < self._MAX_SHOTS:
+                # create shot here
+                pass
+        pass
+
     def _update_pre_sprites(self, dt):
         self._arrow_angle += dt * self._arrow_vel
         vel_change = 0
@@ -75,12 +82,15 @@ class ModePlay(ModeScreenSize):
 
     def _draw_post_sprites(self, screen, offset):
         if self._draw_arrow and self._ship.alive():
-            vec = pygame.Vector2(-30, 0)
-            vec.rotate_ip(-self._arrow_angle)
             start = pygame.Vector2(self._ship.rect.midbottom) + offset
-            end = start + vec
+            end = self._get_aim_end(start)
             pygame.draw.line(screen, "red", start, end)
 
     def _cleanup(self):
         self._shots.empty()
         del self._ship
+
+    def _get_aim_end(self, start: pygame.Vector2):
+        vec = pygame.Vector2(-30, 0)
+        vec.rotate_ip(-self._arrow_angle)
+        return start + vec
