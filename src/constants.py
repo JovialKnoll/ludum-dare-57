@@ -62,6 +62,7 @@ TEXT_COLOR = (164, 162, 165)
 DARK_TEXT_COLOR = (82, 81, 83)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+WATER_BLUE = (0, 23, 198)
 
 _location = '.'
 if getattr(sys, 'frozen', False):
