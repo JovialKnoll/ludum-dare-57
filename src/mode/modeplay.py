@@ -23,7 +23,8 @@ class ModePlay(ModeScreenSize):
 
     def __init__(self):
         super().__init__()
-        self._background.fill(constants.WHITE)
+        title_screen = jovialengine.load.image(constants.TITLE_SCREEN)
+        self._background.blit(title_screen, (0, -260))
         self._background.fill(
             constants.WATER_BLUE,
             (0, self._HORIZON, constants.SCREEN_SIZE[0], constants.SCREEN_SIZE[1]))
