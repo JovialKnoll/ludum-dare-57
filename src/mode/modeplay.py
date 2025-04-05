@@ -118,15 +118,15 @@ class ModePlay(ModeScreenSize):
     def _draw_post_sprites(self, screen, offset):
         for shot in self._shots.sprites():
             center = pygame.Vector2(shot.rect.center) + offset
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (-1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (0, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (-1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (-1, -1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (1, -1))
-            self._draw_shot_trail(screen, constants.GREY, self._SHOT_INIT_DISTANCE - 2, center + (0, -1))
-            self._draw_shot_trail(screen, constants.GREY, self._SHOT_INIT_DISTANCE - 2, center)
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (-1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (0, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (-1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (-1, -1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, -1))
+            self._draw_shot_trail(screen, constants.GREY, shot.angle, self._SHOT_INIT_DISTANCE - 2, center + (0, -1))
+            self._draw_shot_trail(screen, constants.GREY, shot.angle, self._SHOT_INIT_DISTANCE - 2, center)
 
     def _cleanup(self):
         self._shots.empty()
@@ -139,6 +139,7 @@ class ModePlay(ModeScreenSize):
     def _get_aim_end(self, start: pygame.typing.Point, distance: int):
         return self._get_angle_end(start, distance, self.arrow_angle)
 
-    def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike, length: int, start: pygame.typing.Point):
-        end = self._get_aim_end(start, -length)
+    def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike,
+                         angle: float, length: int, start: pygame.typing.Point):
+        end = self._get_angle_end(start, -length, angle)
         pygame.draw.line(screen, color, start, end)
