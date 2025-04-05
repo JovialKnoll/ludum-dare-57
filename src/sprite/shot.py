@@ -11,10 +11,10 @@ class Shot(jovialengine.GameSprite):
     _COLLISION_MASK_ALPHA_OR_COLORKEY = constants.COLORKEY
 
     _JERK = 0.001 * 0.0004
-    _INITIAL_ACCEL = 0.001 * -0.1
-    _MAX_ACCEL = 0.001 * 0.8
-    _INITIAL_SPEED = 0.001 * 120
-    _MAX_SPEED = 0.001 * 240
+    _INITIAL_ACCEL = 0.001 * -0.2
+    _MAX_ACCEL = 0.001 * 0.4
+    _INITIAL_SPEED = 0.001 * 240
+    _MAX_SPEED = 0.001 * 480
 
     __slots__ = (
         'angle',
