@@ -101,6 +101,7 @@ SHOT_MASK = os.path.join(SPRITES_DIRECTORY, 'shot_mask.png')
 BACKGROUNDS_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'backgrounds')
 
 LONGSLIDE = os.path.join(SOUND_DIRECTORY, 'longslide.ogg')
+LAUNCH = os.path.join(SOUND_DIRECTORY, 'launch.ogg')
 
 MUSIC_DIRECTORY = os.path.join(SOUND_DIRECTORY, 'music')
 

@@ -29,6 +29,8 @@ class Shot(jovialengine.GameSprite):
         self._accel = self._INITIAL_ACCEL
         self._speed = self._INITIAL_SPEED
         self._age = 0
+        launch = jovialengine.load.sound(constants.LAUNCH)
+        launch.play()
 
     def set_angle(self, angle):
         if not self.is_unresponsive():
