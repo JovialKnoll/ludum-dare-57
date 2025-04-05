@@ -102,6 +102,7 @@ BACKGROUNDS_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'backgrounds')
 
 LONGSLIDE = os.path.join(SOUND_DIRECTORY, 'longslide.ogg')
 LAUNCH = os.path.join(SOUND_DIRECTORY, 'launch.ogg')
+CLICK = os.path.join(SOUND_DIRECTORY, 'click.ogg')
 
 MUSIC_DIRECTORY = os.path.join(SOUND_DIRECTORY, 'music')
 

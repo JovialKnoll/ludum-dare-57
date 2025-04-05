@@ -22,6 +22,7 @@ class Shot(jovialengine.GameSprite):
         '_accel',
         '_speed',
         '_age',
+        'steering',
     )
 
     def _start(self, mode):
@@ -29,11 +30,12 @@ class Shot(jovialengine.GameSprite):
         self._accel = self._INITIAL_ACCEL
         self._speed = self._INITIAL_SPEED
         self._age = 0
+        self.steering = True
         launch = jovialengine.load.sound(constants.LAUNCH)
         launch.play()
 
     def set_angle(self, angle):
-        if not self.is_unresponsive():
+        if self.steering:
             self.angle = angle
 
     def update(self, dt, camera):
@@ -49,8 +51,8 @@ class Shot(jovialengine.GameSprite):
         self.rect.move_ip(vec.x, vec.y)
         # aging
         self._age += dt
-        if self.is_unresponsive():
+        if self.steering and self._age > 1000:
+            self.steering = False
             self.seq = 1
-
-    def is_unresponsive(self):
-        return self._age > 1000
+            click = jovialengine.load.sound(constants.CLICK)
+            click.play()
