@@ -7,9 +7,11 @@ from sprite import Ship
 
 class ModePlay(ModeScreenSize):
     _HORIZON = 40
+    _ANGLE_BASIS = 0.001 * 90
     __slots__ = (
         '_ship',
         '_draw_arrow',
+        '_arrow_vel',
         '_arrow_angle',
     )
 
@@ -24,13 +26,28 @@ class ModePlay(ModeScreenSize):
         self._ship = Ship(midbottom=(constants.SCREEN_SIZE[0] // 2, self._HORIZON))
         self._ship.start(self)
         self._draw_arrow = True
+        self._arrow_vel = 0
         self._arrow_angle = 90
 
     def _update_pre_sprites(self, dt):
+        self._arrow_angle += dt * self._arrow_vel
+        vel_change = 0
+        accel_amount = dt * self._ANGLE_BASIS * 2
         if self._input_frame.get_input_state(0, constants.EVENT_LEFT) == 1:
-            self._arrow_angle -= dt * 0.001 * 90
+            vel_change -= accel_amount
         if self._input_frame.get_input_state(0, constants.EVENT_RIGHT) == 1:
-            self._arrow_angle += dt * 0.001 * 90
+            vel_change += accel_amount
+        if self._arrow_vel < -self._ANGLE_BASIS * 2 or self._arrow_vel > self._ANGLE_BASIS * 2:
+            vel_change = 0
+        old_vel = self._arrow_vel
+        self._arrow_vel += vel_change
+        self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._ANGLE_BASIS * 2, self._ANGLE_BASIS * 2)
+        self._arrow_angle += dt * (self._arrow_vel - old_vel) / 2
+        if vel_change == 0:
+            if self._arrow_vel < 0:
+                self._arrow_vel = min(0.0, self._arrow_vel + (accel_amount * 2))
+            if self._arrow_vel > 0:
+                self._arrow_vel = max(0.0, self._arrow_vel - (accel_amount * 2))
 
     def _update_pre_draw(self):
         self._arrow_angle = jovialengine.utility.clamp(self._arrow_angle, 0, 180)
