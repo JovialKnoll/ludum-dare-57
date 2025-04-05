@@ -27,6 +27,9 @@ class Shot(jovialengine.GameSprite):
         self._accel = self._INITIAL_ACCEL
         self._speed = self._INITIAL_SPEED
 
+    def set_angle(self, angle):
+        self.angle = angle
+
     def update(self, dt, camera):
         old_accel = self._accel
         self._accel += dt * self._JERK

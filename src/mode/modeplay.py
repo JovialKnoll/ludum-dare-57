@@ -85,7 +85,7 @@ class ModePlay(ModeScreenSize):
             if self._arrow_vel > 0:
                 self._arrow_vel = max(0.0, self._arrow_vel - (accel_amount * 2))
         for shot in self._shots.sprites():
-            shot.angle = self.arrow_angle
+            shot.set_angle(self.arrow_angle)
 
     def _update_pre_draw(self):
         self.arrow_angle = jovialengine.utility.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
