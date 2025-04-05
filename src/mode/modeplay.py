@@ -13,7 +13,6 @@ class ModePlay(ModeScreenSize):
     __slots__ = (
         '_ship',
         '_shots',
-        '_draw_arrow',
         '_arrow_vel',
         '_arrow_angle',
     )
@@ -29,7 +28,6 @@ class ModePlay(ModeScreenSize):
         self._ship = sprite.Ship(midbottom=(constants.SCREEN_SIZE[0] // 2, self._HORIZON))
         self._ship.start(self)
         self._shots = pygame.sprite.Group()
-        self._draw_arrow = True
         self._arrow_vel = 0
         self._arrow_angle = 90
 
@@ -86,7 +84,7 @@ class ModePlay(ModeScreenSize):
         self._arrow_angle = jovialengine.utility.clamp(self._arrow_angle, 0, 180)
 
     def _draw_post_sprites(self, screen, offset):
-        if self._draw_arrow and self._ship.alive():
+        if self._ship.alive() and len(self._shots) < self._MAX_SHOTS:
             start = pygame.Vector2(self._ship.rect.midbottom) + offset
             end = self._get_aim_end(start, 30)
             pygame.draw.line(screen, "red", start, end)
