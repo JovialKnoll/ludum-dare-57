@@ -33,16 +33,33 @@ class ModePlay(ModeScreenSize):
         self._arrow_angle += dt * self._arrow_vel
         vel_change = 0
         accel_amount = dt * self._ANGLE_BASIS * 2
+        extra_clamp = None
         if self._input_frame.get_input_state(0, constants.EVENT_LEFT) == 1:
             vel_change -= accel_amount
         if self._input_frame.get_input_state(0, constants.EVENT_RIGHT) == 1:
             vel_change += accel_amount
+        if vel_change == 0 and self._input_frame.get_input_state(0, constants.EVENT_DOWN) == 1:
+            if self._arrow_angle > 90:
+                vel_change -= accel_amount
+                extra_clamp = max
+            if self._arrow_angle < 90:
+                vel_change += accel_amount
+                extra_clamp = min
+        if vel_change == 0 and self._input_frame.get_input_state(0, constants.EVENT_UP) == 1:
+            if self._arrow_angle > 90:
+                vel_change += accel_amount
+            if self._arrow_angle < 90:
+                vel_change -= accel_amount
         if self._arrow_vel < -self._ANGLE_BASIS * 2 or self._arrow_vel > self._ANGLE_BASIS * 2:
             vel_change = 0
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
         self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._ANGLE_BASIS * 2, self._ANGLE_BASIS * 2)
         self._arrow_angle += dt * (self._arrow_vel - old_vel) / 2
+        if extra_clamp:
+            self._arrow_angle = extra_clamp(self._arrow_angle, 90)
+            if self._arrow_angle == 90:
+                self._arrow_vel = 0
         if vel_change == 0:
             if self._arrow_vel < 0:
                 self._arrow_vel = min(0.0, self._arrow_vel + (accel_amount * 2))
