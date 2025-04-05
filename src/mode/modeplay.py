@@ -35,11 +35,10 @@ class ModePlay(ModeScreenSize):
     def _update_pre_draw(self):
         self._arrow_angle = jovialengine.utility.clamp(self._arrow_angle, 0, 180)
 
-    def _draw_post_camera(self, screen):
+    def _draw_post_sprites(self, screen, offset):
         if self._draw_arrow and self._ship.alive():
             vec = pygame.Vector2(-30, 0)
             vec.rotate_ip(-self._arrow_angle)
-            print(vec)
-            start = self._ship.rect.midbottom
-
-        pass
+            start = pygame.Vector2(self._ship.rect.midbottom) + offset
+            end = start + vec
+            pygame.draw.line(screen, "red", start, end)
