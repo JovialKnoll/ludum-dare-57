@@ -1,18 +1,11 @@
 import jovialengine
 
 import constants
-#from .modeopening2 import ModeOpening2
+from .modeplay import ModePlay
 from .modeopening import ModeOpening
 
 
 class ModeOpening1(ModeOpening):
-    _LOGO_TEXT = "JovialKnoll"
-
-    __slots__ = (
-        '_time',
-        '_step',
-    )
-
     def __init__(self):
         super().__init__()
         title_screen = jovialengine.load.image(constants.TITLE_SCREEN)
@@ -33,4 +26,4 @@ class ModeOpening1(ModeOpening):
         )
 
     def _switch_mode(self):
-        pass # self.next_mode = ModeOpening2()
+        self.next_mode = ModePlay()
