@@ -11,7 +11,7 @@ class ModePlay(ModeScreenSize):
     _ANGLE_CAP_LEFT = 6
     _ANGLE_CAP_RIGHT = 180 - _ANGLE_CAP_LEFT
     _ANGLE_BASIS = 0.001 * 90
-    _SHOT_INIT_DISTANCE = 10
+    _SHOT_INIT_DISTANCE = 12
     _MAX_SHOTS = 1
     __slots__ = (
         '_ship',
@@ -95,15 +95,15 @@ class ModePlay(ModeScreenSize):
     def _draw_post_sprites(self, screen, offset):
         for shot in self._shots.sprites():
             center = pygame.Vector2(shot.rect.center) + offset
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 1, center + (-1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 1, center + (0, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 1, center + (1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 1, center + (-1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 1, center + (1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 1, center + (-1, -1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 1, center + (1, -1))
-            self._draw_shot_trail(screen, constants.GREY, self._SHOT_INIT_DISTANCE, center + (0, -1))
-            self._draw_shot_trail(screen, constants.GREY, self._SHOT_INIT_DISTANCE, center)
+            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (-1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (0, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (-1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (-1, -1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_INIT_DISTANCE - 3, center + (1, -1))
+            self._draw_shot_trail(screen, constants.GREY, self._SHOT_INIT_DISTANCE - 2, center + (0, -1))
+            self._draw_shot_trail(screen, constants.GREY, self._SHOT_INIT_DISTANCE - 2, center)
 
     def _cleanup(self):
         self._shots.empty()
