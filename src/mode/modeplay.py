@@ -36,7 +36,7 @@ class ModePlay(ModeScreenSize):
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_A):
             if len(self._shots) < self._MAX_SHOTS:
-                pos = self._get_aim_end(self._ship.rect.midbottom, 20)
+                pos = self._get_aim_end(self._ship.rect.midbottom, 10)
                 shot = sprite.Shot(center=pos)
                 shot.start(self)
                 self._shots.add(shot)
@@ -85,23 +85,23 @@ class ModePlay(ModeScreenSize):
     def _update_pre_draw(self):
         self._arrow_angle = jovialengine.utility.clamp(self._arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
 
-    def _draw_post_sprites(self, screen, offset):
-        for shot in self._shots.sprites():
-            self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset)
-            self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (-1, 0))
-            self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (1, 0))
-            self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (0, -1))
-            #self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (-1, -1))
-            #self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (1, -1))
-            #self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (0, -2))
-            #self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (-1, -2))
-            #self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (1, -2))
-            self._draw_shot_trail(screen, constants.GREY, pygame.Vector2(shot.rect.center) + offset + (0, 1))
+    def _draw_pre_sprites(self, screen, offset):
         if self._ship.alive() and len(self._shots) < self._MAX_SHOTS:
             start = pygame.Vector2(self._ship.rect.midbottom) + offset
-            end = self._get_aim_end(start, 30)
+            end = self._get_aim_end(start, 20)
             pygame.draw.line(screen, "red", start, end)
 
+    def _draw_post_sprites(self, screen, offset):
+        for shot in self._shots.sprites():
+            self._draw_shot_trail(screen, constants.DARK_GREY, 7, pygame.Vector2(shot.rect.center) + offset + (-1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, 7, pygame.Vector2(shot.rect.center) + offset + (0, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, 7, pygame.Vector2(shot.rect.center) + offset + (1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, 7, pygame.Vector2(shot.rect.center) + offset + (-1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, 7, pygame.Vector2(shot.rect.center) + offset + (1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, 7, pygame.Vector2(shot.rect.center) + offset + (-1, -1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, 7, pygame.Vector2(shot.rect.center) + offset + (1, -1))
+            self._draw_shot_trail(screen, constants.GREY, 8, pygame.Vector2(shot.rect.center) + offset + (0, -1))
+            self._draw_shot_trail(screen, constants.GREY, 8, pygame.Vector2(shot.rect.center) + offset)
 
     def _cleanup(self):
         self._shots.empty()
@@ -112,6 +112,6 @@ class ModePlay(ModeScreenSize):
         vec.rotate_ip(-self._arrow_angle)
         return start + vec
 
-    def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike, start: pygame.typing.Point):
-        end = self._get_aim_end(start, -20)
+    def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike, length: int, start: pygame.typing.Point):
+        end = self._get_aim_end(start, -length)
         pygame.draw.line(screen, color, start, end)
