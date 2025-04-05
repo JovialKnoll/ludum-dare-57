@@ -66,6 +66,7 @@ DARK_GREY = (64, 64, 64)
 GREY = (128, 128, 128)
 LIGHT_GREY = (200, 200, 200)
 WATER_BLUE = (0, 23, 198)
+SKY_BLUE = (123, 217, 246)
 
 _location = '.'
 if getattr(sys, 'frozen', False):
