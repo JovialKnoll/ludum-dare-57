@@ -87,10 +87,24 @@ class ModePlay(ModeScreenSize):
         self._arrow_angle = jovialengine.utility.clamp(self._arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
 
     def _draw_pre_sprites(self, screen, offset):
-        if self._ship.alive() and len(self._shots) < self._MAX_SHOTS:
+        if self._ship.alive():
             start = pygame.Vector2(self._ship.rect.midbottom) + offset
-            end = self._get_aim_end(start, 20)
-            pygame.draw.line(screen, "red", start, end)
+            end = self._get_angle_end(start, 20, self._ANGLE_CAP_LEFT)
+            screen.fill("red", (end, (1, 1)))
+            screen.fill("red", (end + (1, 0), (1, 1)))
+            end = self._get_angle_end(start, 20, self._ANGLE_CAP_RIGHT)
+            screen.fill("red", (end, (1, 1)))
+            screen.fill("red", (end + (-1, 0), (1, 1)))
+            end = self._get_angle_end(start, 20, 90)
+            screen.fill("red", (end, (1, 1)))
+            screen.fill("red", (end + (0, -1), (1, 1)))
+            end = self._get_angle_end(start, 20, 45)
+            screen.fill("red", (end, (1, 1)))
+            end = self._get_angle_end(start, 20, 135)
+            screen.fill("red", (end, (1, 1)))
+            if len(self._shots) < self._MAX_SHOTS:
+                end = self._get_aim_end(start, 20)
+                pygame.draw.line(screen, "red", start, end)
 
     def _draw_post_sprites(self, screen, offset):
         for shot in self._shots.sprites():
