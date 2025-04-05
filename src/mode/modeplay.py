@@ -17,7 +17,7 @@ class ModePlay(ModeScreenSize):
         '_ship',
         '_shots',
         '_arrow_vel',
-        '_arrow_angle',
+        'arrow_angle',
     )
 
     def __init__(self):
@@ -30,9 +30,9 @@ class ModePlay(ModeScreenSize):
 
         self._ship = sprite.Ship(midbottom=(constants.SCREEN_SIZE[0] // 2, self._HORIZON))
         self._ship.start(self)
-        self._shots = pygame.sprite.Group()
+        self._shots: pygame.sprite.Group[sprite.Shot] = pygame.sprite.Group()
         self._arrow_vel: float = 0
-        self._arrow_angle: float = 90
+        self.arrow_angle: float = 90
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_A):
@@ -43,7 +43,7 @@ class ModePlay(ModeScreenSize):
                 self._shots.add(shot)
 
     def _update_pre_sprites(self, dt):
-        self._arrow_angle += dt * self._arrow_vel
+        self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
         angle_basis = self._ANGLE_BASIS
         if self._shots:
@@ -56,35 +56,37 @@ class ModePlay(ModeScreenSize):
             vel_change += accel_amount
         if vel_change == 0:
             if self._input_frame.get_input_state(0, constants.EVENT_DOWN) == 1:
-                if self._arrow_angle > 90:
+                if self.arrow_angle > 90:
                     vel_change -= accel_amount
                     extra_clamp = max
-                if self._arrow_angle < 90:
+                if self.arrow_angle < 90:
                     vel_change += accel_amount
                     extra_clamp = min
             if self._input_frame.get_input_state(0, constants.EVENT_UP) == 1:
-                if self._arrow_angle > 90:
+                if self.arrow_angle > 90:
                     vel_change += accel_amount
-                if self._arrow_angle < 90:
+                if self.arrow_angle < 90:
                     vel_change -= accel_amount
         if self._arrow_vel < -angle_basis * 2 or self._arrow_vel > angle_basis * 2:
             vel_change = 0
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
         self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -angle_basis * 2, angle_basis * 2)
-        self._arrow_angle += dt * (self._arrow_vel - old_vel) / 2
+        self.arrow_angle += dt * (self._arrow_vel - old_vel) / 2
         if extra_clamp:
-            self._arrow_angle = extra_clamp(self._arrow_angle, 90)
-            if self._arrow_angle == 90:
+            self.arrow_angle = extra_clamp(self.arrow_angle, 90)
+            if self.arrow_angle == 90:
                 self._arrow_vel = 0
         if vel_change == 0:
             if self._arrow_vel < 0:
                 self._arrow_vel = min(0.0, self._arrow_vel + (accel_amount * 2))
             if self._arrow_vel > 0:
                 self._arrow_vel = max(0.0, self._arrow_vel - (accel_amount * 2))
+        for shot in self._shots.sprites():
+            shot.angle = self.arrow_angle
 
     def _update_pre_draw(self):
-        self._arrow_angle = jovialengine.utility.clamp(self._arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
+        self.arrow_angle = jovialengine.utility.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
 
     def _draw_pre_sprites(self, screen, offset):
         if self._ship.alive():
@@ -130,7 +132,7 @@ class ModePlay(ModeScreenSize):
         return start + vec
 
     def _get_aim_end(self, start: pygame.typing.Point, distance: int):
-        return self._get_angle_end(start, distance, self._arrow_angle)
+        return self._get_angle_end(start, distance, self.arrow_angle)
 
     def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike, length: int, start: pygame.typing.Point):
         end = self._get_aim_end(start, -length)
