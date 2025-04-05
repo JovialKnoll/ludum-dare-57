@@ -38,18 +38,19 @@ class ModePlay(ModeScreenSize):
             vel_change -= accel_amount
         if self._input_frame.get_input_state(0, constants.EVENT_RIGHT) == 1:
             vel_change += accel_amount
-        if vel_change == 0 and self._input_frame.get_input_state(0, constants.EVENT_DOWN) == 1:
-            if self._arrow_angle > 90:
-                vel_change -= accel_amount
-                extra_clamp = max
-            if self._arrow_angle < 90:
-                vel_change += accel_amount
-                extra_clamp = min
-        if vel_change == 0 and self._input_frame.get_input_state(0, constants.EVENT_UP) == 1:
-            if self._arrow_angle > 90:
-                vel_change += accel_amount
-            if self._arrow_angle < 90:
-                vel_change -= accel_amount
+        if vel_change == 0:
+            if self._input_frame.get_input_state(0, constants.EVENT_DOWN) == 1:
+                if self._arrow_angle > 90:
+                    vel_change -= accel_amount
+                    extra_clamp = max
+                if self._arrow_angle < 90:
+                    vel_change += accel_amount
+                    extra_clamp = min
+            if self._input_frame.get_input_state(0, constants.EVENT_UP) == 1:
+                if self._arrow_angle > 90:
+                    vel_change += accel_amount
+                if self._arrow_angle < 90:
+                    vel_change -= accel_amount
         if self._arrow_vel < -self._ANGLE_BASIS * 2 or self._arrow_vel > self._ANGLE_BASIS * 2:
             vel_change = 0
         old_vel = self._arrow_vel
