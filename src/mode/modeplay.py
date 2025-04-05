@@ -31,8 +31,8 @@ class ModePlay(ModeScreenSize):
         self._ship = sprite.Ship(midbottom=(constants.SCREEN_SIZE[0] // 2, self._HORIZON))
         self._ship.start(self)
         self._shots = pygame.sprite.Group()
-        self._arrow_vel = 0
-        self._arrow_angle = 90
+        self._arrow_vel: float = 0
+        self._arrow_angle: float = 90
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_A):
@@ -109,10 +109,14 @@ class ModePlay(ModeScreenSize):
         self._shots.empty()
         del self._ship
 
-    def _get_aim_end(self, start: pygame.typing.Point, distance: int):
+    @staticmethod
+    def _get_angle_end(start: pygame.typing.Point, distance: int, angle: float):
         vec = pygame.Vector2(-distance, 0)
-        vec.rotate_ip(-self._arrow_angle)
+        vec.rotate_ip(-angle)
         return start + vec
+
+    def _get_aim_end(self, start: pygame.typing.Point, distance: int):
+        return self._get_angle_end(start, distance, self._arrow_angle)
 
     def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike, length: int, start: pygame.typing.Point):
         end = self._get_aim_end(start, -length)
