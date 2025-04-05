@@ -89,6 +89,11 @@ class ModePlay(ModeScreenSize):
 
     def _update_pre_draw(self):
         self.arrow_angle = jovialengine.utility.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
+        for shot in self._shots.sprites():
+            if shot.rect.top > self._SPACE_SIZE[1] \
+                    or shot.rect.right < 0 \
+                    or shot.rect.left > self._SPACE_SIZE[0]:
+                shot.kill()
 
     def _draw_pre_sprites(self, screen, offset):
         if self._ship.alive():
