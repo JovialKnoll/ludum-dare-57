@@ -2,6 +2,7 @@ import jovialengine
 import pygame
 
 import constants
+import utility
 import sprite
 from .modescreensize import ModeScreenSize
 
@@ -127,9 +128,7 @@ class ModePlay(ModeScreenSize):
 
     @staticmethod
     def _get_angle_end(start: pygame.typing.Point, distance: int, angle: float):
-        vec = pygame.Vector2(-distance, 0)
-        vec.rotate_ip(-angle)
-        return start + vec
+        return utility.angle_vector(distance, angle) + start
 
     def _get_aim_end(self, start: pygame.typing.Point, distance: int):
         return self._get_angle_end(start, distance, self.arrow_angle)

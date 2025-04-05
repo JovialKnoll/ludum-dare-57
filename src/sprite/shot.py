@@ -1,6 +1,7 @@
 import jovialengine
 
 import constants
+import utility
 
 
 class Shot(jovialengine.GameSprite):
@@ -17,4 +18,6 @@ class Shot(jovialengine.GameSprite):
         self.angle = mode.arrow_angle
 
     def update(self, dt, camera):
-        pass
+        distance = dt * 0.001 * 20
+        vec = utility.angle_vector(distance, self.angle)
+        self.rect.move_ip(vec.x, vec.y)
