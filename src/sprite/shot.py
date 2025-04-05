@@ -39,7 +39,7 @@ class Shot(jovialengine.GameSprite):
             self.angle = angle
 
     def update(self, dt, camera):
-        # movement
+        # shot thrust
         old_accel = self._accel
         self._accel += dt * self._JERK
         self._accel = min(self._accel, self._MAX_ACCEL)
@@ -49,6 +49,8 @@ class Shot(jovialengine.GameSprite):
         distance = min(distance, dt * self._MAX_SPEED)
         vec = utility.angle_vector(distance, self.angle)
         self.rect.move_ip(vec.x, vec.y)
+        # shot sinking
+        self.rect.move_ip(0, dt * 0.001 * 20)
         # aging
         self._age += dt
         if self.steering and self._age > 1000:

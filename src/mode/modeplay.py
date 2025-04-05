@@ -9,7 +9,7 @@ from .modescreensize import ModeScreenSize
 
 class ModePlay(ModeScreenSize):
     _HORIZON = 40
-    _ANGLE_CAP_LEFT = 6
+    _ANGLE_CAP_LEFT = 0
     _ANGLE_CAP_RIGHT = 180 - _ANGLE_CAP_LEFT
     _ANGLE_BASIS = 0.001 * 90
     _SHOT_INIT_DISTANCE = 12
