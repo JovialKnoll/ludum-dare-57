@@ -36,8 +36,11 @@ class ModePlay(ModeScreenSize):
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
 
+    def _take_event(self, event):
+        print(event)
+
     def _take_frame(self, input_frame):
-        if input_frame.was_input_pressed(constants.EVENT_A):
+        if input_frame.was_input_pressed(constants.EVENT_S):
             if len(self._shots) < self._MAX_SHOTS:
                 pos = self._get_aim_end(self._ship.rect.midbottom, self._SHOT_INIT_DISTANCE)
                 shot = sprite.Shot(center=pos)

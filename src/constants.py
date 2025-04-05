@@ -16,46 +16,58 @@ EVENT_NAMES = (
     "Right",
     "Up",
     "Down",
-    "A",
-    "B",
-    "X",
-    "Y",
+    "Ship Left",
+    "Ship Right",
+    "Shoot",
 )
 EVENT_LEFT = jovialengine.EVENT_TYPE_START_POS
 EVENT_RIGHT = jovialengine.EVENT_TYPE_START_POS + 1
 EVENT_UP = jovialengine.EVENT_TYPE_START_POS + 2
 EVENT_DOWN = jovialengine.EVENT_TYPE_START_POS + 3
-EVENT_A = jovialengine.EVENT_TYPE_START_POS + 4
-EVENT_B = jovialengine.EVENT_TYPE_START_POS + 5
-EVENT_X = jovialengine.EVENT_TYPE_START_POS + 6
-EVENT_Y = jovialengine.EVENT_TYPE_START_POS + 7
+EVENT_L = jovialengine.EVENT_TYPE_START_POS + 4
+EVENT_R = jovialengine.EVENT_TYPE_START_POS + 5
+EVENT_S = jovialengine.EVENT_TYPE_START_POS + 6
 ALL_EVENTS = {
     EVENT_LEFT,
     EVENT_RIGHT,
     EVENT_UP,
     EVENT_DOWN,
-    EVENT_A,
-    EVENT_B,
-    EVENT_X,
-    EVENT_Y,
+    EVENT_L,
+    EVENT_R,
+    EVENT_S,
 }
 INPUT_DEFAULTS = (
     jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.KEYBOARD, pygame.K_LEFT),
-    jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.KEYBOARD, pygame.K_RIGHT),
-    jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.KEYBOARD, pygame.K_UP),
-    jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.KEYBOARD, pygame.K_DOWN),
-    jovialengine.InputDefault(0, EVENT_A, jovialengine.InputType.KEYBOARD, pygame.K_z),
-    jovialengine.InputDefault(0, EVENT_B, jovialengine.InputType.KEYBOARD, pygame.K_x),
-    jovialengine.InputDefault(0, EVENT_X, jovialengine.InputType.KEYBOARD, pygame.K_a),
-    jovialengine.InputDefault(0, EVENT_Y, jovialengine.InputType.KEYBOARD, pygame.K_s),
+    jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.KEYBOARD, pygame.K_a),
     jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.CON_HAT, 0),
+
+    jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.KEYBOARD, pygame.K_RIGHT),
+    jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.KEYBOARD, pygame.K_d),
     jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.CON_HAT, 1),
+
+    jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.KEYBOARD, pygame.K_UP),
+    jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.KEYBOARD, pygame.K_w),
     jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.CON_HAT, 2),
+
+    jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.KEYBOARD, pygame.K_DOWN),
+    jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.KEYBOARD, pygame.K_s),
     jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.CON_HAT, 3),
-    jovialengine.InputDefault(0, EVENT_A, jovialengine.InputType.CON_BUTTON, 0),
-    jovialengine.InputDefault(0, EVENT_B, jovialengine.InputType.CON_BUTTON, 1),
-    jovialengine.InputDefault(0, EVENT_X, jovialengine.InputType.CON_BUTTON, 2),
-    jovialengine.InputDefault(0, EVENT_Y, jovialengine.InputType.CON_BUTTON, 3),
+
+    jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.KEYBOARD, pygame.K_z),
+    jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.KEYBOARD, pygame.K_LESS),
+    jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.CON_BUTTON, 2),#X
+    jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.CON_BUTTON, 4),#L
+
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_x),
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_GREATER),
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.CON_BUTTON, 3),#Y
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.CON_BUTTON, 5),#R
+
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_c),
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_SLASH),
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_SPACE),
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.CON_BUTTON, 0),#A
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.CON_BUTTON, 1),#B
 )
 
 TEXT_COLOR = (164, 162, 165)
