@@ -24,6 +24,13 @@ class ModeOpening1(ModeOpening):
             constants.BLACK,
             constants.WHITE
         )
+        version_width = len(constants.VERSION) * constants.FONT_SIZE
+        jovialengine.get_default_font_wrap().render_to(
+            self._background,
+            (constants.SCREEN_SIZE[0] - version_width, constants.SCREEN_SIZE[1] - constants.FONT_HEIGHT),
+            constants.VERSION,
+            constants.TEXT_COLOR
+        )
 
     def _switch_mode(self):
         pass # self.next_mode = ModeOpening2()
