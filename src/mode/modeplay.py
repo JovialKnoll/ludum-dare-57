@@ -98,6 +98,11 @@ class ModePlay(ModeScreenSize):
     def _draw_pre_sprites(self, screen, offset):
         if self._ship.alive():
             start = pygame.Vector2(self._ship.rect.midbottom) + offset
+            # line for aiming
+            end = self._get_aim_end(start, 20)
+            color = "red" if len(self._shots) < self._MAX_SHOTS else constants.DARK_RED
+            pygame.draw.line(screen, color, start, end)
+            # various angles
             end = self._get_angle_end(start, 20, self._ANGLE_CAP_LEFT)
             screen.fill("red", (end, (1, 1)))
             screen.fill("red", (end + (1, 0), (1, 1)))
@@ -111,9 +116,6 @@ class ModePlay(ModeScreenSize):
             screen.fill("red", (end, (1, 1)))
             end = self._get_angle_end(start, 20, 135)
             screen.fill("red", (end, (1, 1)))
-            if len(self._shots) < self._MAX_SHOTS:
-                end = self._get_aim_end(start, 20)
-                pygame.draw.line(screen, "red", start, end)
 
     def _draw_post_sprites(self, screen, offset):
         for shot in self._shots.sprites():
