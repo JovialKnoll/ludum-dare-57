@@ -87,6 +87,9 @@ JK_LOGO_LIGHT_GREY = os.path.join(LOGOS_DIRECTORY, 'jklogo_light_grey.png')
 STAR = os.path.join(LOGOS_DIRECTORY, 'star.png')
 TITLE_SCREEN = os.path.join(LOGOS_DIRECTORY, 'title_screen.png')
 
+SPIRTES_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'sprites')
+SHIP = os.path.join(SPIRTES_DIRECTORY, 'ship.png')
+
 BACKGROUNDS_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'backgrounds')
 
 LONGSLIDE = os.path.join(SOUND_DIRECTORY, 'longslide.ogg')
