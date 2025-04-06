@@ -85,16 +85,6 @@ class ModePlay(ModeScreenSize):
         for shot in self._shots.sprites():
             shot.set_angle(self.arrow_angle)
 
-    def _update_post_sprites(self, dt):
-        self._ship.rect.clamp_ip(((0, 0), self._SPACE_SIZE))
-
-    def _update_pre_draw(self):
-        for shot in self._shots.sprites():
-            if shot.rect.top > self._SPACE_SIZE[1] \
-                    or shot.rect.right < 0 \
-                    or shot.rect.left > self._SPACE_SIZE[0]:
-                shot.kill()
-
     def _draw_pre_sprites(self, screen, offset):
         if self._ship.alive():
             start = pygame.Vector2(self._ship.rect.midbottom) + offset

@@ -19,3 +19,6 @@ class Ship(jovialengine.GameSprite):
         if self._input_frame.get_input_state(0, constants.EVENT_R) > constants.STICK_THRESHOLD:
             dx += dt * self._SPEED
         self.rect.move_ip(dx, 0)
+        # check bounds
+        space_size = jovialengine.get_current_mode().get_space_size()
+        self.rect.clamp_ip(((0, 0), space_size))

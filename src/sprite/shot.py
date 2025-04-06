@@ -58,3 +58,8 @@ class Shot(jovialengine.GameSprite):
             self.seq = 1
             click = jovialengine.load.sound(constants.CLICK)
             click.play()
+        # check bounds
+        space_size = jovialengine.get_current_mode().get_space_size()
+        if self.rect.top > space_size[1] \
+                or self.rect.right < 0 or self.rect.left > space_size[0]:
+            self.kill()
