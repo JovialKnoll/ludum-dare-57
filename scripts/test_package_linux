@@ -2,7 +2,7 @@ cd ../../jovialengine
 sed -i "s/VERSION_REPLACE/999/g" setup.cfg
 python3.13 -m build --sdist --wheel --outdir dist/ .
 sed -i "s/999/VERSION_REPLACE/g" setup.cfg
-cd ../REPLACE
+cd ../ludum-dare-57
 source src/venv/bin/activate
 pip install --force-reinstall ../jovialengine/dist/jovialengine-999-py3-none-any.whl
 python src/main.py

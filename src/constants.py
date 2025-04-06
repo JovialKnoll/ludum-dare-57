@@ -4,7 +4,7 @@ import os
 import jovialengine
 import pygame
 
-TITLE = "DEPTH_CHARGES"
+TITLE = "DEPTH CHARGE"
 SCREEN_SIZE = (640, 360)
 COLORKEY = (255, 0, 255)
 FONT_SIZE = 8
