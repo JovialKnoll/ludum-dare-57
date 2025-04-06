@@ -10,7 +10,7 @@ class Ship(jovialengine.GameSprite):
     _COLLISION_MASK_ALPHA_OR_COLORKEY = constants.COLORKEY
     _GETS_INPUT = True
 
-    _SPEED = 0.001 * 40
+    _SPEED = 0.001 * 20
 
     def update(self, dt, camera):
         dx = 0
