@@ -36,9 +36,6 @@ class ModePlay(ModeScreenSize):
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
 
-    def _take_event(self, event):
-        print(event)
-
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
             if len(self._shots) < self._MAX_SHOTS:
@@ -55,19 +52,19 @@ class ModePlay(ModeScreenSize):
         #    angle_basis = self._ANGLE_BASIS / 2
         accel_amount = dt * angle_basis * 2
         extra_clamp = None
-        if self._input_frame.get_input_state(0, constants.EVENT_LEFT) == 1:
+        if self._input_frame.get_input_state(0, constants.EVENT_LEFT) > constants.STICK_THRESHOLD:
             vel_change -= accel_amount
-        if self._input_frame.get_input_state(0, constants.EVENT_RIGHT) == 1:
+        if self._input_frame.get_input_state(0, constants.EVENT_RIGHT) > constants.STICK_THRESHOLD:
             vel_change += accel_amount
         if vel_change == 0:
-            if self._input_frame.get_input_state(0, constants.EVENT_DOWN) == 1:
+            if self._input_frame.get_input_state(0, constants.EVENT_DOWN) > constants.STICK_THRESHOLD:
                 if self.arrow_angle > 90:
                     vel_change -= accel_amount
                     extra_clamp = max
                 if self.arrow_angle < 90:
                     vel_change += accel_amount
                     extra_clamp = min
-            if self._input_frame.get_input_state(0, constants.EVENT_UP) == 1:
+            if self._input_frame.get_input_state(0, constants.EVENT_UP) > constants.STICK_THRESHOLD:
                 if self.arrow_angle > 90:
                     vel_change += accel_amount
                 if self.arrow_angle < 90:

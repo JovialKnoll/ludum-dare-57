@@ -40,18 +40,26 @@ INPUT_DEFAULTS = (
     jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.KEYBOARD, pygame.K_LEFT),
     jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.KEYBOARD, pygame.K_a),
     jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.CON_HAT, 0),
+    jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.CON_AXIS, 0),
+    jovialengine.InputDefault(0, EVENT_LEFT, jovialengine.InputType.CON_AXIS, 4),
 
     jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.KEYBOARD, pygame.K_RIGHT),
     jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.KEYBOARD, pygame.K_d),
     jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.CON_HAT, 1),
+    jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.CON_AXIS, 1),
+    jovialengine.InputDefault(0, EVENT_RIGHT, jovialengine.InputType.CON_AXIS, 5),
 
     jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.KEYBOARD, pygame.K_UP),
     jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.KEYBOARD, pygame.K_w),
     jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.CON_HAT, 2),
+    jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.CON_AXIS, 2),
+    jovialengine.InputDefault(0, EVENT_UP, jovialengine.InputType.CON_AXIS, 6),
 
     jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.KEYBOARD, pygame.K_DOWN),
     jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.KEYBOARD, pygame.K_s),
     jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.CON_HAT, 3),
+    jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.CON_AXIS, 3),
+    jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.CON_AXIS, 7),
 
     jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.KEYBOARD, pygame.K_z),
     jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.KEYBOARD, pygame.K_LESS),
@@ -69,6 +77,8 @@ INPUT_DEFAULTS = (
     jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.CON_BUTTON, 0),#A
     jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.CON_BUTTON, 1),#B
 )
+
+STICK_THRESHOLD = 0.3
 
 TEXT_COLOR = (164, 162, 165)
 DARK_TEXT_COLOR = (82, 81, 83)
