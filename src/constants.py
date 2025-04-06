@@ -62,12 +62,12 @@ INPUT_DEFAULTS = (
     jovialengine.InputDefault(0, EVENT_DOWN, jovialengine.InputType.CON_AXIS, 7),
 
     jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.KEYBOARD, pygame.K_z),
-    jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.KEYBOARD, pygame.K_LESS),
+    jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.KEYBOARD, pygame.K_COMMA),
     jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.CON_BUTTON, 2),#X
     jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.CON_BUTTON, 4),#L
 
     jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_x),
-    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_GREATER),
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_PERIOD),
     jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.CON_BUTTON, 3),#Y
     jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.CON_BUTTON, 5),#R
 
