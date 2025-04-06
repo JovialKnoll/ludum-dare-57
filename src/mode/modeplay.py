@@ -1,3 +1,5 @@
+import random
+
 import jovialengine
 import pygame
 
@@ -40,7 +42,7 @@ class ModePlay(ModeScreenSize):
         self.arrow_angle: float = 90
 
         for i in range(18):
-            self._spawn_sub(1.0, i, False)
+            self._spawn_sub(1.0, i)
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
@@ -169,7 +171,8 @@ class ModePlay(ModeScreenSize):
             and self._input_frame.get_input_state(0, constants.EVENT_L) <= constants.STICK_THRESHOLD \
             and self._input_frame.get_input_state(0, constants.EVENT_R) <= constants.STICK_THRESHOLD
 
-    def _spawn_sub(self, speed_factor: float, position_factor: int, on_right: bool):
+    def _spawn_sub(self, speed_factor: float, position_factor: int):
+        on_right = bool(random.getrandbits(1))
         # speed_factor=0.0: 0.001 * 120
         # speed_factor=1.0: 0.001 * 200
         # continuously varying speeds
