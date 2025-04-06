@@ -7,6 +7,7 @@ import constants
 import utility
 import sprite
 from .modescreensize import ModeScreenSize
+from .modeending import ModeEnding
 
 
 class ModePlay(ModeScreenSize):
@@ -44,6 +45,10 @@ class ModePlay(ModeScreenSize):
         self.arrow_angle: float = 90
         self._next_sub_positions = list(range(18))
         self._spawn_sub(1.0)
+
+    def _take_event(self, event: pygame.event.Event):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+            self._end_mode()
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
@@ -97,6 +102,9 @@ class ModePlay(ModeScreenSize):
         self._time += dt
         if self.ship.alive():
             jovialengine.get_state().score += dt / 1000
+        # ending
+        if not self.sprites_all:
+            self._end_mode()
 
     def _draw_pre_sprites(self, screen, offset):
         if self.ship.alive():
@@ -198,3 +206,8 @@ class ModePlay(ModeScreenSize):
         else:
             s = sprite.Sub(speed, topright=position)
         s.start(self)
+
+    def _end_mode(self):
+        jovialengine.get_state().enter_score()
+        self._stop_mixer()
+        self.next_mode = ModeEnding()
