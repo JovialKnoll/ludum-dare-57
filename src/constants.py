@@ -4,7 +4,7 @@ import os
 import jovialengine
 import pygame
 
-TITLE = "Template Project"
+TITLE = "DEPTH_CHARGES"
 SCREEN_SIZE = (640, 360)
 COLORKEY = (255, 0, 255)
 FONT_SIZE = 8
@@ -86,6 +86,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 DARK_GREY = (64, 64, 64)
 GREY = (128, 128, 128)
+CLOUD_GREY = (173, 175, 180)
 LIGHT_GREY = (200, 200, 200)
 WATER_BLUE = (0, 23, 198)
 SKY_BLUE = (123, 217, 246)

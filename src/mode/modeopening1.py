@@ -1,4 +1,5 @@
 import jovialengine
+import pygame
 
 import constants
 import sprite
@@ -16,27 +17,43 @@ class ModeOpening1(ModeOpening):
         self._background.fill(
             constants.WATER_BLUE,
             (0, self._HORIZON, constants.SCREEN_SIZE[0], constants.SCREEN_SIZE[1]))
-        jovialengine.get_default_font_wrap().render_to_centered(
+        font_wrap = jovialengine.get_default_font_wrap()
+        font_wrap.render_to_centered(
             self._background,
             (constants.SCREEN_SIZE[0] // 2 + 1, constants.SCREEN_SIZE[1] // 3 * 2 + constants.FONT_SIZE // 2 - 1),
             "press any key to start",
             constants.SKY_BLUE,
             constants.WATER_BLUE
         )
-        jovialengine.get_default_font_wrap().render_to_centered(
+        font_wrap.render_to_centered(
             self._background,
             (constants.SCREEN_SIZE[0] // 2 + 1, constants.SCREEN_SIZE[1] // 3 * 2 + constants.FONT_SIZE // 2),
             "press any key to start",
             constants.SKY_BLUE
         )
-        jovialengine.get_default_font_wrap().render_to_centered(
+        font_wrap.render_to_centered(
             self._background,
             (constants.SCREEN_SIZE[0] // 2, constants.SCREEN_SIZE[1] // 3 * 2 + constants.FONT_SIZE // 2),
             "press any key to start",
             constants.WHITE
         )
+        title_surf = font_wrap.render_inside(
+            font_wrap.font.size(constants.TITLE)[0],
+            constants.TITLE,
+            constants.DARK_RED,
+            constants.CLOUD_GREY
+        )
+        title_surf = pygame.transform.scale2x(title_surf)
+        title_surf = pygame.transform.rotozoom(title_surf, -1.5, 1)
+        title_surf.set_colorkey((0, 0, 0))
+        #title_surf = pygame.transform.scale2x(title_surf)
+        #title_surf = pygame.transform.scale_by(title_surf, 2)
+        #title_surf = pygame.transform.scale2x(title_surf)
+        title_rect = title_surf.get_rect()
+        title_rect.center = (constants.SCREEN_SIZE[0] // 2, constants.SCREEN_SIZE[1] // 4)
+        self._background.blit(title_surf, title_rect)
         version_width = len(constants.VERSION) * constants.FONT_SIZE
-        jovialengine.get_default_font_wrap().render_to(
+        font_wrap.render_to(
             self._background,
             (constants.SCREEN_SIZE[0] - version_width, constants.SCREEN_SIZE[1] - constants.FONT_HEIGHT),
             constants.VERSION,
