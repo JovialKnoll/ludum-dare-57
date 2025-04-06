@@ -7,8 +7,16 @@ from .modeplay import ModePlay
 from .modeopening import ModeOpening
 
 
-class ModeOpening1(ModeOpening):
+class ModeOpening1(ModeOpening, jovialengine.Saveable):
     _HORIZON = constants.SCREEN_SIZE[1] // 2
+
+    def save(self):
+        return 0
+
+    @classmethod
+    def load(cls, save_data):
+        new_obj = cls()
+        return new_obj
 
     def __init__(self):
         super().__init__()
@@ -49,6 +57,14 @@ class ModeOpening1(ModeOpening):
         title_rect = title_surf.get_rect()
         title_rect.center = (constants.SCREEN_SIZE[0] // 2, constants.SCREEN_SIZE[1] // 4)
         self._background.blit(title_surf, title_rect)
+        high_score = str(jovialengine.get_state().high_score)
+        high_score_width = len(high_score) * constants.FONT_SIZE
+        font_wrap.render_to(
+            self._background,
+            (constants.SCREEN_SIZE[0] - high_score_width, 0),
+            high_score,
+            constants.BLACK
+        )
         version_width = len(constants.VERSION) * constants.FONT_SIZE
         font_wrap.render_to(
             self._background,
