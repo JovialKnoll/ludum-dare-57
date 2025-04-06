@@ -8,9 +8,17 @@ Files and Folders:
     - you can edit game configuration here
   assets
     - various assets the game needs to run
-  saves
+  saves -MAY NOT BE RELEVANT FOR THIS GAME-
     - will be created automatically
     - your save files are stored here
   screenshots
     - will be created automatically
     - screenshots you take will go here
+
+Controls:
+  - AIM with D-PAD, CONTROL STICKS, WASD, or ARROWS
+  - SHOOT with A BUTTON, B BUTTON, C KEY, [/] KEY, OR SPACE BAR
+  - MOVE with SHOULDER BUTTONS, X AND Y BUTTONS, [,] AND [.] KEYS, OR Z AND X KEYS
+  - PAUSE with START BUTTON or ESC KEY
+    - CHANGE OPTIONS, EDIT CONTROLS, and RESET CONTROLS here
+  - TAKE A SCREENSHOT with F12
