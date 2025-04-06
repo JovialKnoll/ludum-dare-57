@@ -131,8 +131,7 @@ MUSIC_DIRECTORY = os.path.join(SOUND_DIRECTORY, 'music')
 
 IMAGE_DIRECTORY = os.path.join(SRC_DIRECTORY, 'images')
 
-VERSION_TEXT = os.path.join(TEXT_DIRECTORY, 'version.txt')
-
+VERSION_TEXT = os.path.join(ASSETS_DIRECTORY, 'version.txt')
 VERSION = ''
 try:
     with open(VERSION_TEXT) as version_file:
