@@ -33,7 +33,7 @@ class Sub(jovialengine.GameSprite):
         if (self._speed < 0 and self.rect.right < 0) \
                 or (self._speed > 0 and self.rect.left > space_size[0]):
             self.kill()
-        if self.alive():
+        if self.alive() and jovialengine.get_current_mode().ship.alive():
             self._countdown -= dt
             if self._countdown <= 0:
                 pos = self.rect.midright if self._speed > 0 else self.rect.midleft

@@ -175,10 +175,11 @@ class ModePlay(ModeScreenSize):
             and self._input_frame.get_input_state(0, constants.EVENT_R) <= constants.STICK_THRESHOLD
 
     def _spawn_sub(self, speed_factor: float):
-        self._spawn_sub_base(
-            speed_factor,
-            self._next_sub_positions.pop(),
-            bool(random.getrandbits(1)))
+        if self.ship.alive():
+            self._spawn_sub_base(
+                speed_factor,
+                self._next_sub_positions.pop(),
+                bool(random.getrandbits(1)))
 
     def _spawn_sub_base(self, speed_factor: float, position_factor: int, on_right: bool):
         # speed_factor=0.0: 0.001 * 120
