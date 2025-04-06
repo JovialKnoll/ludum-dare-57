@@ -22,5 +22,6 @@ class Sub(jovialengine.GameSprite):
 
     def update(self, dt, camera):
         space_size = jovialengine.get_current_mode().get_space_size()
-        if self.rect.right < 0 or self.rect.left > space_size[0]:
+        if (self._speed < 0 and self.rect.right < 0) \
+                or (self._speed > 0 and self.rect.left > space_size[0]):
             self.kill()
