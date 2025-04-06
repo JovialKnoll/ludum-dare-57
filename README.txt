@@ -1,7 +1,7 @@
-REPLACE
+DEPTH CHARGE
 
 Files and Folders:
-  REPLACE.exe
+  DEPTH_CHARGE.exe
     - game executable - run this!
   config.ini
     - will be created automatically

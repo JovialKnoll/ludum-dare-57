@@ -1,2 +1,2 @@
-# ludum-dare-57
+# DEPTH CHARGE
 A Game for Ludum Dare 57
