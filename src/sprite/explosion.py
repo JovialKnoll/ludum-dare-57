@@ -1,9 +1,10 @@
 import jovialengine
 
 import constants
+import sprite
 
 
-class Explosion(jovialengine.GameSprite):
+class Explosion(sprite.ShotTrigger):
     _IMAGE_LOCATION = constants.EXPLOSION
     _ALPHA_OR_COLORKEY = constants.COLORKEY
     _IMAGE_SECTION_SIZE = (21, 21)

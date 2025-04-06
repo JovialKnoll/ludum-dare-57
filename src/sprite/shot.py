@@ -2,9 +2,10 @@ import jovialengine
 
 import constants
 import utility
+import sprite
 
 
-class Shot(jovialengine.GameSprite):
+class Shot(sprite.ShotTrigger):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
     _IMAGE_SECTION_SIZE = (5, 5)
@@ -63,3 +64,6 @@ class Shot(jovialengine.GameSprite):
         if self.rect.top > space_size[1] \
                 or self.rect.right < 0 or self.rect.left > space_size[0]:
             self.kill()
+
+    def collide_ShotTrigger(self, other: sprite.ShotTrigger):
+        pass
