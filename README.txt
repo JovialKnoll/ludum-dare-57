@@ -8,7 +8,7 @@ Files and Folders:
     - you can edit game configuration here
   assets
     - various assets the game needs to run
-  saves -MAY NOT BE RELEVANT FOR THIS GAME-
+  saves
     - will be created automatically
     - your save files are stored here
   screenshots
@@ -21,4 +21,7 @@ Controls:
   - MOVE with SHOULDER BUTTONS, X AND B BUTTONS, [,] AND [/] KEYS, OR Z AND C KEYS
   - PAUSE with START BUTTON or ESC KEY
     - CHANGE OPTIONS, EDIT CONTROLS, and RESET CONTROLS here
+    - also LOAD and SAVE here
+      - while on the title screen or in the score screen
+      - if you want your high scores saved
   - TAKE A SCREENSHOT with F12
