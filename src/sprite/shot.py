@@ -70,3 +70,6 @@ class Shot(ShotTrigger):
         self.kill()
         explosion = Explosion(center=self.rect.center)
         explosion.start()
+
+    def collide_Explosion(self, other: Explosion):
+        self.kill()

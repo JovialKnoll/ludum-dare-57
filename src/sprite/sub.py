@@ -34,5 +34,6 @@ class Sub(ShotTrigger):
 
     def collide_Shot(self, other: Shot):
         self.kill()
-        explosion = Explosion(center=self.rect.center)
-        explosion.start()
+
+    def collide_Explosion(self, other: Explosion):
+        self.kill()

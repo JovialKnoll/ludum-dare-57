@@ -14,7 +14,7 @@ class ModePlay(ModeScreenSize):
     _ANGLE_BASIS = 0.001 * 90
     _MAX_ANGLE_VEL = _ANGLE_BASIS * 2
     _SHOT_INIT_DISTANCE = 12
-    _MAX_SHOTS = 5
+    _MAX_SHOTS = 3
     __slots__ = (
         '_ship',
         '_shots',
