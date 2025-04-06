@@ -36,6 +36,14 @@ class ModePlay(ModeScreenSize):
         self._shots: pygame.sprite.Group[sprite.Shot] = pygame.sprite.Group()
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
+        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2))
+        s.start(self)
+        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2 + 40))
+        s.start(self)
+        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2 + 80))
+        s.start(self)
+        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2 + 120))
+        s.start(self)
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):

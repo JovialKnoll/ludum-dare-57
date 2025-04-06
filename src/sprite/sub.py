@@ -2,6 +2,8 @@ import jovialengine
 
 import constants
 from .shottrigger import ShotTrigger
+from .shot import Shot
+from .explosion import Explosion
 
 
 class Sub(ShotTrigger):
@@ -12,6 +14,10 @@ class Sub(ShotTrigger):
     __slots__ = (
         '_speed',
     )
+
+    def __init__(self, speed: float, **kwargs):
+        super().__init__(**kwargs)
+        self._speed = speed
 
     def _start(self, mode):
         if self._speed > 0:
@@ -25,3 +31,8 @@ class Sub(ShotTrigger):
         if (self._speed < 0 and self.rect.right < 0) \
                 or (self._speed > 0 and self.rect.left > space_size[0]):
             self.kill()
+
+    def collide_Shot(self, other: Shot):
+        self.kill()
+        explosion = Explosion(center=self.rect.center)
+        explosion.start()
