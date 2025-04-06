@@ -48,7 +48,7 @@ class ModePlay(ModeScreenSize):
         if input_frame.was_input_pressed(constants.EVENT_S):
             if self._can_fire():
                 pos = self._get_aim_end(self._ship.rect.midbottom, self._SHOT_INIT_DISTANCE)
-                shot = sprite.Shot(center=pos)
+                shot = sprite.Shot(self.arrow_angle, center=pos)
                 shot.start(self)
                 self._shots.add(shot)
 

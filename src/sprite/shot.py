@@ -29,12 +29,15 @@ class Shot(jovialengine.GameSprite):
         'steering',
     )
 
-    def _start(self, mode):
-        self.angle: float = mode.arrow_angle
+    def __init__(self, angle: float, **kwargs):
+        super().__init__(**kwargs)
+        self.angle = angle
         self._accel = self._INITIAL_ACCEL
         self._speed = self._INITIAL_SPEED
         self._age = 0
         self.steering = True
+
+    def _start(self, mode):
         launch = jovialengine.load.sound(constants.LAUNCH)
         launch.play()
 
