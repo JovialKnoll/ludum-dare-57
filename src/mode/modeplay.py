@@ -71,7 +71,6 @@ class ModePlay(ModeScreenSize):
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
         self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._MAX_ANGLE_VEL, self._MAX_ANGLE_VEL)
-        old_angle = self.arrow_angle
         self.arrow_angle += dt * (self._arrow_vel - old_vel) / 2
         if clamp:
             if abs(self.arrow_angle - 90) <= dt * self._MAX_ANGLE_VEL:
