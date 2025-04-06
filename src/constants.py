@@ -124,9 +124,10 @@ EXPLOSION = os.path.join(SPRITES_DIRECTORY, 'explosion.png')
 
 BACKGROUNDS_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'backgrounds')
 
-LONGSLIDE = os.path.join(SOUND_DIRECTORY, 'longslide.ogg')
-LAUNCH = os.path.join(SOUND_DIRECTORY, 'launch.ogg')
+BOOM = os.path.join(SOUND_DIRECTORY, 'boom.ogg')
 CLICK = os.path.join(SOUND_DIRECTORY, 'click.ogg')
+LAUNCH = os.path.join(SOUND_DIRECTORY, 'launch.ogg')
+LONGSLIDE = os.path.join(SOUND_DIRECTORY, 'longslide.ogg')
 
 MUSIC_DIRECTORY = os.path.join(SOUND_DIRECTORY, 'music')
 

@@ -14,6 +14,11 @@ class Explosion(jovialengine.GameSprite):
         '_age',
     )
 
+    def _start(self, mode):
+        self._age = 0
+        boom = jovialengine.load.sound(constants.BOOM)
+        boom.play()
+
     def update(self, dt, camera):
         # aging
         self._age += dt
