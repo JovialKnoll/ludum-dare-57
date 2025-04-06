@@ -47,10 +47,7 @@ class ModePlay(ModeScreenSize):
     def _update_pre_sprites(self, dt):
         self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
-        angle_basis = self._ANGLE_BASIS
-        #if self._shots:
-        #    angle_basis = self._ANGLE_BASIS / 2
-        accel_amount = dt * angle_basis * 2
+        accel_amount = dt * self._ANGLE_BASIS * 2
         extra_clamp = None
         if self._input_frame.get_input_state(0, constants.EVENT_LEFT) > constants.STICK_THRESHOLD:
             vel_change -= accel_amount
@@ -69,11 +66,11 @@ class ModePlay(ModeScreenSize):
                     vel_change += accel_amount
                 if self.arrow_angle < 90:
                     vel_change -= accel_amount
-        if self._arrow_vel < -angle_basis * 2 or self._arrow_vel > angle_basis * 2:
+        if self._arrow_vel < -self._ANGLE_BASIS * 2 or self._arrow_vel > self._ANGLE_BASIS * 2:
             vel_change = 0
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
-        self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -angle_basis * 2, angle_basis * 2)
+        self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._ANGLE_BASIS * 2, self._ANGLE_BASIS * 2)
         self.arrow_angle += dt * (self._arrow_vel - old_vel) / 2
         if extra_clamp:
             self.arrow_angle = extra_clamp(self.arrow_angle, 90)
