@@ -25,7 +25,7 @@ class State(jovialengine.Saveable):
         return new_obj
 
     def get_score(self):
-        return f"{self.score:012}"
+        return f"{int(self.score):012}"
 
     def get_high_score(self):
         return f"{self.high_score:012}"

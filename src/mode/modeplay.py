@@ -96,7 +96,7 @@ class ModePlay(ModeScreenSize):
         # time progression
         self._time += dt
         if self.ship.alive():
-            jovialengine.get_state().score += dt
+            jovialengine.get_state().score += dt / 1000
 
     def _draw_pre_sprites(self, screen, offset):
         if self.ship.alive():

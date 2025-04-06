@@ -81,4 +81,6 @@ class SubShot(jovialengine.GameSprite):
         explosion.start()
 
     def collide_Explosion(self, other: Explosion):
+        if self.alive():
+            jovialengine.get_state().score += constants.SCORE_SUBSHOT_EXPLOSION
         self.kill()

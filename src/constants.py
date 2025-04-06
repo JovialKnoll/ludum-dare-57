@@ -93,6 +93,11 @@ DARK_RED = (128, 0, 0)
 
 HORIZON = 40
 
+SCORE_SUB = 500
+SCORE_SUB_EXPLOSION = SCORE_SUB // 2
+SCORE_SUBSHOT = 100
+SCORE_SUBSHOT_EXPLOSION = SCORE_SUBSHOT // 2
+
 _location = '.'
 if getattr(sys, 'frozen', False):
     _location = sys.executable

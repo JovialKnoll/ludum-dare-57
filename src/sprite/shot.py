@@ -74,6 +74,8 @@ class Shot(jovialengine.GameSprite):
 
     def collide_Sub(self, other: Sub):
         self.kill()
+        if other.alive():
+            jovialengine.get_state().score += constants.SCORE_SUB
         other.kill()
         pos = (pygame.Vector2(self.rect.center) + pygame.Vector2(other.rect.center)) / 2
         explosion = Explosion(center=pos)
@@ -81,6 +83,8 @@ class Shot(jovialengine.GameSprite):
 
     def collide_SubShot(self, other: SubShot):
         self.kill()
+        if other.alive():
+            jovialengine.get_state().score += constants.SCORE_SUBSHOT
         other.kill()
         pos = (pygame.Vector2(self.rect.center) + pygame.Vector2(other.rect.center)) / 2
         explosion = Explosion(center=pos)

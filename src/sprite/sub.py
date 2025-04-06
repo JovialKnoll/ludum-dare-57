@@ -42,4 +42,6 @@ class Sub(jovialengine.GameSprite):
                 self._countdown += random.randint(2400, 2600)
 
     def collide_Explosion(self, other: Explosion):
+        if self.alive():
+            jovialengine.get_state().score += constants.SCORE_SUB_EXPLOSION
         self.kill()
