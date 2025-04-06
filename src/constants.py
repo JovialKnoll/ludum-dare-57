@@ -66,16 +66,15 @@ INPUT_DEFAULTS = (
     jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.CON_BUTTON, 2),#X
     jovialengine.InputDefault(0, EVENT_L, jovialengine.InputType.CON_BUTTON, 4),#L
 
-    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_x),
-    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_PERIOD),
-    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.CON_BUTTON, 3),#Y
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_c),
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.KEYBOARD, pygame.K_SLASH),
+    jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.CON_BUTTON, 1),#B
     jovialengine.InputDefault(0, EVENT_R, jovialengine.InputType.CON_BUTTON, 5),#R
 
-    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_c),
-    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_SLASH),
-    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_SPACE),
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_x),
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.KEYBOARD, pygame.K_PERIOD),
     jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.CON_BUTTON, 0),#A
-    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.CON_BUTTON, 1),#B
+    jovialengine.InputDefault(0, EVENT_S, jovialengine.InputType.CON_BUTTON, 3),#Y
 )
 
 STICK_THRESHOLD = 0.3
