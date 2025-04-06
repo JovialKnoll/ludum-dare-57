@@ -91,6 +91,8 @@ WATER_BLUE = (0, 23, 198)
 SKY_BLUE = (123, 217, 246)
 DARK_RED = (128, 0, 0)
 
+HORIZON = 40
+
 _location = '.'
 if getattr(sys, 'frozen', False):
     _location = sys.executable
@@ -128,6 +130,7 @@ BOOM = os.path.join(SOUND_DIRECTORY, 'boom.ogg')
 CLICK = os.path.join(SOUND_DIRECTORY, 'click.ogg')
 LAUNCH = os.path.join(SOUND_DIRECTORY, 'launch.ogg')
 LONGSLIDE = os.path.join(SOUND_DIRECTORY, 'longslide.ogg')
+SUBLAUNCH = os.path.join(SOUND_DIRECTORY, 'sublaunch.ogg')
 
 MUSIC_DIRECTORY = os.path.join(SOUND_DIRECTORY, 'music')
 

@@ -1,15 +1,16 @@
+import math
+
 import jovialengine
 import pygame
 
 import constants
 import utility
-from .sub import Sub
-from .subshot import SubShot
+from .ship import Ship
 from .explosion import Explosion
 
 
 
-class Shot(jovialengine.GameSprite):
+class SubShot(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
     _IMAGE_SECTION_SIZE = (5, 5)
@@ -27,24 +28,23 @@ class Shot(jovialengine.GameSprite):
         '_accel',
         '_speed',
         '_age',
-        'steering',
     )
 
-    def __init__(self, angle: float, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.angle = angle
+        self.angle = -90
         self._accel = self._INITIAL_ACCEL
         self._speed = self._INITIAL_SPEED
         self._age = 0
-        self.steering = True
 
     def _start(self, mode):
-        launch = jovialengine.load.sound(constants.LAUNCH)
-        launch.play()
-
-    def set_angle(self, angle):
-        if self.steering:
-            self.angle = angle
+        ship_pos = mode.ship.rect.center
+        self_pos = self.rect.center
+        self.angle = math.degrees(
+            math.atan2(self_pos[1] - ship_pos[1], self_pos[0] - ship_pos[0])
+        ) + 180
+        sublaunch = jovialengine.load.sound(constants.SUBLAUNCH)
+        sublaunch.play()
 
     def update(self, dt, camera):
         # shot thrust
@@ -61,25 +61,21 @@ class Shot(jovialengine.GameSprite):
         self.rect.move_ip(0, dt * 0.001 * 20)
         # aging
         self._age += dt
-        if self.steering and self._age > 1000:
-            self.steering = False
-            self.seq = 1
-            click = jovialengine.load.sound(constants.CLICK)
-            click.play()
+        new_seq = (self._age // 200) % 2
+        if self.seq != new_seq:
+            self.seq = new_seq
         # check bounds
         space_size = jovialengine.get_current_mode().get_space_size()
         if self.rect.top > space_size[1] \
                 or self.rect.right < 0 or self.rect.left > space_size[0]:
             self.kill()
+        if self.rect.top < constants.HORIZON:
+            self.kill()
+            # maybe switch to midtop?
+            explosion = Explosion(center=self.rect.center)
+            explosion.start()
 
-    def collide_Sub(self, other: Sub):
-        self.kill()
-        other.kill()
-        pos = (pygame.Vector2(self.rect.center) + pygame.Vector2(other.rect.center)) / 2
-        explosion = Explosion(center=pos)
-        explosion.start()
-
-    def collide_SubShot(self, other: SubShot):
+    def collide_Ship(self, other: Ship):
         self.kill()
         other.kill()
         pos = (pygame.Vector2(self.rect.center) + pygame.Vector2(other.rect.center)) / 2

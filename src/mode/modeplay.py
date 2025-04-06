@@ -10,7 +10,6 @@ from .modescreensize import ModeScreenSize
 
 
 class ModePlay(ModeScreenSize):
-    _HORIZON = 40
     _ANGLE_CAP_LEFT = 0
     _ANGLE_CAP_RIGHT = 180 - _ANGLE_CAP_LEFT
     _ANGLE_BASIS = 0.001 * 90
@@ -19,10 +18,11 @@ class ModePlay(ModeScreenSize):
     _MAX_SHOTS = 3
     __slots__ = (
         '_time',
-        '_ship',
+        'ship',
         '_shots',
         '_arrow_vel',
         'arrow_angle',
+        '_next_sub_positions',
     )
 
     def __init__(self):
@@ -32,22 +32,22 @@ class ModePlay(ModeScreenSize):
         self._background.blit(title_screen, (0, -260))
         self._background.fill(
             constants.WATER_BLUE,
-            (0, self._HORIZON, self._SPACE_SIZE[0], self._SPACE_SIZE[1]))
+            (0, constants.HORIZON, self._SPACE_SIZE[0], self._SPACE_SIZE[1]))
         # setup game objects
         self._time = 0
-        self._ship = sprite.Ship(midbottom=(self._SPACE_SIZE[0] // 2, self._HORIZON))
-        self._ship.start(self)
+        self.ship = sprite.Ship(midbottom=(self._SPACE_SIZE[0] // 2, constants.HORIZON))
+        self.ship.start(self)
         self._shots: pygame.sprite.Group[sprite.Shot] = pygame.sprite.Group()
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
-
+        self._next_sub_positions = list(range(18))
         for i in range(18):
-            self._spawn_sub(1.0, i)
+            self._spawn_sub(1.0)
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
             if self._can_fire():
-                pos = self._get_aim_end(self._ship.rect.midbottom, self._SHOT_INIT_DISTANCE)
+                pos = self._get_aim_end(self.ship.rect.midbottom, self._SHOT_INIT_DISTANCE)
                 shot = sprite.Shot(self.arrow_angle, center=pos)
                 shot.start(self)
                 self._shots.add(shot)
@@ -94,11 +94,12 @@ class ModePlay(ModeScreenSize):
             shot.set_angle(self.arrow_angle)
         # time progression
         self._time += dt
-        jovialengine.get_state().score += dt
+        if self.ship.alive():
+            jovialengine.get_state().score += dt
 
     def _draw_pre_sprites(self, screen, offset):
-        if self._ship.alive():
-            start = pygame.Vector2(self._ship.rect.midbottom) + offset
+        if self.ship.alive():
+            start = pygame.Vector2(self.ship.rect.midbottom) + offset
             # line for aiming
             end = self._get_aim_end(start, 20)
             color = "red" if self._can_fire() else constants.DARK_RED
@@ -152,7 +153,7 @@ class ModePlay(ModeScreenSize):
 
     def _cleanup(self):
         self._shots.empty()
-        del self._ship
+        del self.ship
 
     @staticmethod
     def _get_angle_end(start: pygame.typing.Point, distance: int, angle: float):
@@ -167,16 +168,22 @@ class ModePlay(ModeScreenSize):
         pygame.draw.line(screen, color, start, end)
 
     def _can_fire(self):
-        return len(self._shots) < self._MAX_SHOTS \
+        return self.ship.alive() \
+            and len(self._shots) < self._MAX_SHOTS \
             and self._input_frame.get_input_state(0, constants.EVENT_L) <= constants.STICK_THRESHOLD \
             and self._input_frame.get_input_state(0, constants.EVENT_R) <= constants.STICK_THRESHOLD
 
-    def _spawn_sub(self, speed_factor: float, position_factor: int):
-        on_right = bool(random.getrandbits(1))
+    def _spawn_sub(self, speed_factor: float):
+        self._spawn_sub_base(
+            speed_factor,
+            self._next_sub_positions.pop(),
+            bool(random.getrandbits(1)))
+
+    def _spawn_sub_base(self, speed_factor: float, position_factor: int, on_right: bool):
         # speed_factor=0.0: 0.001 * 120
         # speed_factor=1.0: 0.001 * 200
         # continuously varying speeds
-        speed = 0.001 * (120 + speed_factor * 80)
+        speed = 0.001 * (120 + speed_factor * 120)
         # position_factor=0: 181
         # position_factor=17: 351
         # 18 possible positions

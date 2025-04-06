@@ -1,7 +1,7 @@
 import jovialengine
 
 import constants
-
+from .explosion import Explosion
 
 class Ship(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHIP
@@ -22,3 +22,6 @@ class Ship(jovialengine.GameSprite):
         # check bounds
         space_size = jovialengine.get_current_mode().get_space_size()
         self.rect.clamp_ip(((0, 0), space_size))
+
+    def collide_Explosion(self, other: Explosion):
+        self.kill()
