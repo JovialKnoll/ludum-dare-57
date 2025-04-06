@@ -1,3 +1,4 @@
+import random
 import math
 
 import jovialengine
@@ -17,10 +18,8 @@ class SubShot(jovialengine.GameSprite):
     _COLLISION_MASK_LOCATION = constants.SHOT
     _COLLISION_MASK_ALPHA_OR_COLORKEY = constants.COLORKEY
 
-    _JERK = 0.001 * 0.0004
     _INITIAL_ACCEL = 0.001 * -0.2
     _MAX_ACCEL = 0.001 * 0.4
-    _INITIAL_SPEED = 0.001 * 240
     _MAX_SPEED = 0.001 * 480
 
     __slots__ = (
@@ -28,14 +27,16 @@ class SubShot(jovialengine.GameSprite):
         '_accel',
         '_speed',
         '_age',
+        '_jerk',
     )
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.angle = -90
         self._accel = self._INITIAL_ACCEL
-        self._speed = self._INITIAL_SPEED
+        self._speed = 0.001 * (240 - random.randrange(120))
         self._age = 0
+        self._jerk = 0.001 * (0.0001 * random.randint(3, 4))
 
     def _start(self, mode):
         ship_pos = mode.ship.rect.center
@@ -50,7 +51,7 @@ class SubShot(jovialengine.GameSprite):
     def update(self, dt, camera):
         # shot thrust
         old_accel = self._accel
-        self._accel += dt * self._JERK
+        self._accel += dt * self._jerk
         self._accel = min(self._accel, self._MAX_ACCEL)
         distance = dt * self._speed + (old_accel + self._accel) * dt * dt / 4
         self._speed += dt * self._accel
