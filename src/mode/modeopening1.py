@@ -57,7 +57,7 @@ class ModeOpening1(ModeOpening, jovialengine.Saveable):
         title_rect = title_surf.get_rect()
         title_rect.center = (constants.SCREEN_SIZE[0] // 2, constants.SCREEN_SIZE[1] // 4)
         self._background.blit(title_surf, title_rect)
-        high_score = str(jovialengine.get_state().high_score)
+        high_score = jovialengine.get_state().get_high_score()
         high_score_width = len(high_score) * constants.FONT_SIZE
         font_wrap.render_to(
             self._background,

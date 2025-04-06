@@ -23,3 +23,9 @@ class State(jovialengine.Saveable):
         new_obj.score = save_data['score']
         new_obj.high_score = save_data['high_score']
         return new_obj
+
+    def get_score(self):
+        return f"{self.score:010}"
+
+    def get_high_score(self):
+        return f"{self.high_score:010}"

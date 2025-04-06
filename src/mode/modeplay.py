@@ -31,14 +31,6 @@ class ModePlay(ModeScreenSize):
         self._background.fill(
             constants.WATER_BLUE,
             (0, self._HORIZON, self._SPACE_SIZE[0], self._SPACE_SIZE[1]))
-        high_score = str(jovialengine.get_state().high_score)
-        high_score_width = len(high_score) * constants.FONT_SIZE
-        jovialengine.get_default_font_wrap().render_to(
-            self._background,
-            (constants.SCREEN_SIZE[0] - high_score_width, 0),
-            high_score,
-            constants.BLACK
-        )
         # setup game objects
         self._time = 0
         self._ship = sprite.Ship(midbottom=(self._SPACE_SIZE[0] // 2, self._HORIZON))
@@ -137,6 +129,24 @@ class ModePlay(ModeScreenSize):
             color = constants.GREY if shot.steering else constants.DARK_GREY
             self._draw_shot_trail(screen, color, shot.angle, self._SHOT_INIT_DISTANCE - 2, center + (0, -1))
             self._draw_shot_trail(screen, color, shot.angle, self._SHOT_INIT_DISTANCE - 2, center)
+
+    def _draw_post_camera(self, screen: pygame.Surface):
+        font_wrap = jovialengine.get_default_font_wrap()
+        high_score = jovialengine.get_state().get_high_score()
+        high_score_width = len(high_score) * constants.FONT_SIZE
+        font_wrap.render_to(
+            screen,
+            (constants.SCREEN_SIZE[0] - high_score_width, 0),
+            high_score,
+            constants.BLACK
+        )
+        score = jovialengine.get_state().get_score()
+        font_wrap.render_to(
+            screen,
+            (0, 0),
+            score,
+            constants.BLACK
+        )
 
     def _cleanup(self):
         self._shots.empty()
