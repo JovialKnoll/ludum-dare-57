@@ -12,6 +12,7 @@ class ModePlay(ModeScreenSize):
     _ANGLE_CAP_LEFT = 0
     _ANGLE_CAP_RIGHT = 180 - _ANGLE_CAP_LEFT
     _ANGLE_BASIS = 0.001 * 90
+    _MAX_ANGLE_VEL = _ANGLE_BASIS * 2
     _SHOT_INIT_DISTANCE = 12
     _MAX_SHOTS = 5
     __slots__ = (
@@ -66,11 +67,11 @@ class ModePlay(ModeScreenSize):
                     vel_change += accel_amount
                 if self.arrow_angle < 90:
                     vel_change -= accel_amount
-        if self._arrow_vel < -self._ANGLE_BASIS * 2 or self._arrow_vel > self._ANGLE_BASIS * 2:
+        if self._arrow_vel < -self._MAX_ANGLE_VEL or self._arrow_vel > self._MAX_ANGLE_VEL:
             vel_change = 0
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
-        self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._ANGLE_BASIS * 2, self._ANGLE_BASIS * 2)
+        self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._MAX_ANGLE_VEL, self._MAX_ANGLE_VEL)
         self.arrow_angle += dt * (self._arrow_vel - old_vel) / 2
         if extra_clamp:
             self.arrow_angle = extra_clamp(self.arrow_angle, 90)
