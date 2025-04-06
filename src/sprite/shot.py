@@ -1,12 +1,14 @@
 import jovialengine
+import pygame
 
 import constants
 import utility
-from .shottrigger import ShotTrigger
+from .sub import Sub
 from .explosion import Explosion
 
 
-class Shot(ShotTrigger):
+
+class Shot(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
     _IMAGE_SECTION_SIZE = (5, 5)
@@ -66,9 +68,11 @@ class Shot(ShotTrigger):
                 or self.rect.right < 0 or self.rect.left > space_size[0]:
             self.kill()
 
-    def collide_ShotTrigger(self, other: ShotTrigger):
+    def collide_Sub(self, other: Sub):
         self.kill()
-        explosion = Explosion(center=self.rect.center)
+        other.kill()
+        pos = (pygame.Vector2(self.rect.center) + pygame.Vector2(other.rect.center)) / 2
+        explosion = Explosion(center=pos)
         explosion.start()
 
     def collide_Explosion(self, other: Explosion):

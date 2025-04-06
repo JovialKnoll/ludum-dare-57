@@ -1,12 +1,10 @@
 import jovialengine
 
 import constants
-from .shottrigger import ShotTrigger
-from .shot import Shot
 from .explosion import Explosion
 
 
-class Sub(ShotTrigger):
+class Sub(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SUB
     _ALPHA_OR_COLORKEY = constants.COLORKEY
     _COLLISION_MASK_LOCATION = constants.SUB
@@ -31,9 +29,6 @@ class Sub(ShotTrigger):
         if (self._speed < 0 and self.rect.right < 0) \
                 or (self._speed > 0 and self.rect.left > space_size[0]):
             self.kill()
-
-    def collide_Shot(self, other: Shot):
-        self.kill()
 
     def collide_Explosion(self, other: Explosion):
         self.kill()
