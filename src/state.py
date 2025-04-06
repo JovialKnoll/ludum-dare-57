@@ -37,3 +37,4 @@ class State(jovialengine.Saveable):
     def enter_score(self):
         self.high_scores.append(int(self.score))
         self.high_scores.sort(reverse=True)
+        self.score = 0

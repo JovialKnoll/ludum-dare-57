@@ -71,6 +71,8 @@ class ModeEnding(ModeOpening, jovialengine.Saveable):
         score_rect.midtop = next_midtop
         self._background.blit(score_surf, score_rect)
 
+        jovialengine.get_state().enter_score()
+
         high_scores_surf = font_wrap.render_inside(
             font_wrap.font.size("HIGH SCORE")[0],
             "HIGH SCORE",
@@ -98,4 +100,5 @@ class ModeEnding(ModeOpening, jovialengine.Saveable):
             next_midtop = high_score_rect.midbottom
 
     def _switch_mode(self):
-        pass
+        next_mode_cls = jovialengine.get_start_mode_cls()
+        self.next_mode = next_mode_cls()
