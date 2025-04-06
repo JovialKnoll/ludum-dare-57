@@ -48,8 +48,8 @@ class ModePlay(ModeScreenSize):
     def _update_pre_sprites(self, dt):
         self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
-        accel_amount = dt * self._ANGLE_BASIS * 2
-        extra_clamp = None
+        accel_amount = dt * self._ANGLE_BASIS / 50
+        clamp = False
         if self._input_frame.get_input_state(0, constants.EVENT_LEFT) > constants.STICK_THRESHOLD:
             vel_change -= accel_amount
         if self._input_frame.get_input_state(0, constants.EVENT_RIGHT) > constants.STICK_THRESHOLD:
@@ -58,10 +58,9 @@ class ModePlay(ModeScreenSize):
             if self._input_frame.get_input_state(0, constants.EVENT_DOWN) > constants.STICK_THRESHOLD:
                 if self.arrow_angle > 90:
                     vel_change -= accel_amount
-                    extra_clamp = max
                 if self.arrow_angle < 90:
                     vel_change += accel_amount
-                    extra_clamp = min
+                clamp = True
             if self._input_frame.get_input_state(0, constants.EVENT_UP) > constants.STICK_THRESHOLD:
                 if self.arrow_angle > 90:
                     vel_change += accel_amount
@@ -72,12 +71,13 @@ class ModePlay(ModeScreenSize):
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
         self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._MAX_ANGLE_VEL, self._MAX_ANGLE_VEL)
+        old_angle = self.arrow_angle
         self.arrow_angle += dt * (self._arrow_vel - old_vel) / 2
-        if extra_clamp:
-            self.arrow_angle = extra_clamp(self.arrow_angle, 90)
-            if self.arrow_angle == 90:
+        if clamp:
+            if abs(self.arrow_angle - 90) <= dt * self._MAX_ANGLE_VEL:
+                self.arrow_angle = 90
                 self._arrow_vel = 0
-        if vel_change == 0:
+        elif vel_change == 0:
             if self._arrow_vel < 0:
                 self._arrow_vel = min(0.0, self._arrow_vel + (accel_amount * 2))
             if self._arrow_vel > 0:
