@@ -14,11 +14,11 @@ class Sub(jovialengine.GameSprite):
     )
 
     def _start(self, mode):
-        # facing left by default
         if self._speed > 0:
-            pass
-            #self.image = pygame.transform.flip(self.image, True, False)
-            #self._mask_image = pygame.transform.flip(self._mask_image, True, False)
+            # if going right flip so facing right
+            self.image = jovialengine.load.flip(self.image, True, False)
+            self._mask_image = jovialengine.load.flip(self._mask_image, True, False)
+            self.mask = jovialengine.load.mask_surface(self._mask_image)
 
     def update(self, dt, camera):
         pass
