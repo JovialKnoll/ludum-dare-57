@@ -2,10 +2,11 @@ import jovialengine
 
 import constants
 import utility
-import sprite
+from .shottrigger import ShotTrigger
+from .explosion import Explosion
 
 
-class Shot(sprite.ShotTrigger):
+class Shot(ShotTrigger):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
     _IMAGE_SECTION_SIZE = (5, 5)
@@ -65,5 +66,7 @@ class Shot(sprite.ShotTrigger):
                 or self.rect.right < 0 or self.rect.left > space_size[0]:
             self.kill()
 
-    def collide_ShotTrigger(self, other: sprite.ShotTrigger):
-        pass
+    def collide_ShotTrigger(self, other: ShotTrigger):
+        self.kill()
+        explosion = Explosion(center=self.rect.center)
+        explosion.start()

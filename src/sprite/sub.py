@@ -1,10 +1,10 @@
 import jovialengine
 
 import constants
-import sprite
+from .shottrigger import ShotTrigger
 
 
-class Sub(sprite.ShotTrigger):
+class Sub(ShotTrigger):
     _IMAGE_LOCATION = constants.SUB
     _ALPHA_OR_COLORKEY = constants.COLORKEY
     _COLLISION_MASK_LOCATION = constants.SUB
