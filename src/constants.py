@@ -119,6 +119,7 @@ SPRITES_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'sprites')
 SHIP = os.path.join(SPRITES_DIRECTORY, 'ship.png')
 SHOT = os.path.join(SPRITES_DIRECTORY, 'shot.png')
 SHOT_MASK = os.path.join(SPRITES_DIRECTORY, 'shot_mask.png')
+SUB = os.path.join(SPRITES_DIRECTORY, 'sub.png')
 
 BACKGROUNDS_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'backgrounds')
 
