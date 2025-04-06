@@ -208,5 +208,4 @@ class ModePlay(ModeScreenSize):
         s.start(self)
 
     def _end_mode(self):
-        self._stop_mixer()
         self.next_mode = ModeEnding()

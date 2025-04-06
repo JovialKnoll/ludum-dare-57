@@ -1,5 +1,7 @@
 import jovialengine
 
+import constants
+
 
 class State(jovialengine.Saveable):
     __slots__ = (
@@ -35,6 +37,10 @@ class State(jovialengine.Saveable):
         return [f"{high_score:010}" for high_score in self.high_scores[:10]]
 
     def enter_score(self):
-        self.high_scores.append(int(self.score))
+        int_score = int(self.score)
+        self.high_scores.append(int_score)
         self.high_scores.sort(reverse=True)
         self.score = 0
+        if self.high_scores[0] == int_score:
+            new_high_score = jovialengine.load.sound(constants.NEW_HIGH_SCORE)
+            new_high_score.play()
