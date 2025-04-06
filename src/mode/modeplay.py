@@ -30,6 +30,8 @@ class ModePlay(ModeScreenSize):
     def __init__(self):
         super().__init__()
         random.seed()
+        announcement = jovialengine.load.sound(constants.ANNOUNCEMENT)
+        announcement.play()
         # setup background
         title_screen = jovialengine.load.image(constants.TITLE_SCREEN)
         self._background.blit(title_screen, (0, -260))

@@ -132,6 +132,7 @@ EXPLOSION = os.path.join(SPRITES_DIRECTORY, 'explosion.png')
 
 BACKGROUNDS_DIRECTORY = os.path.join(GRAPHICS_DIRECTORY, 'backgrounds')
 
+ANNOUNCEMENT = os.path.join(SOUND_DIRECTORY, 'announcement.ogg')
 BOOM = os.path.join(SOUND_DIRECTORY, 'boom.ogg')
 CLICK = os.path.join(SOUND_DIRECTORY, 'click.ogg')
 LAUNCH = os.path.join(SOUND_DIRECTORY, 'launch.ogg')
