@@ -23,14 +23,14 @@ class ModePlay(ModeScreenSize):
 
     def __init__(self):
         super().__init__()
+        # setup background
         title_screen = jovialengine.load.image(constants.TITLE_SCREEN)
         self._background.blit(title_screen, (0, -260))
         self._background.fill(
             constants.WATER_BLUE,
-            (0, self._HORIZON, constants.SCREEN_SIZE[0], constants.SCREEN_SIZE[1]))
-        # should set up background more probably
-
-        self._ship = sprite.Ship(midbottom=(constants.SCREEN_SIZE[0] // 2, self._HORIZON))
+            (0, self._HORIZON, self._SPACE_SIZE[0], self._SPACE_SIZE[1]))
+        # setup game objects
+        self._ship = sprite.Ship(midbottom=(self._SPACE_SIZE[0] // 2, self._HORIZON))
         self._ship.start(self)
         self._shots: pygame.sprite.Group[sprite.Shot] = pygame.sprite.Group()
         self._arrow_vel: float = 0
