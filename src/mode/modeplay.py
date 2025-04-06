@@ -38,7 +38,7 @@ class ModePlay(ModeScreenSize):
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
-            if len(self._shots) < self._MAX_SHOTS:
+            if self._can_fire():
                 pos = self._get_aim_end(self._ship.rect.midbottom, self._SHOT_INIT_DISTANCE)
                 shot = sprite.Shot(center=pos)
                 shot.start(self)
@@ -103,7 +103,7 @@ class ModePlay(ModeScreenSize):
             start = pygame.Vector2(self._ship.rect.midbottom) + offset
             # line for aiming
             end = self._get_aim_end(start, 20)
-            color = "red" if len(self._shots) < self._MAX_SHOTS else constants.DARK_RED
+            color = "red" if self._can_fire() else constants.DARK_RED
             pygame.draw.line(screen, color, start, end)
             # various angles
             end = self._get_angle_end(start, 20, self._ANGLE_CAP_LEFT)
@@ -149,3 +149,8 @@ class ModePlay(ModeScreenSize):
                          angle: float, length: int, start: pygame.typing.Point):
         end = self._get_angle_end(start, -length, angle)
         pygame.draw.line(screen, color, start, end)
+
+    def _can_fire(self):
+        return len(self._shots) < self._MAX_SHOTS \
+            and self._input_frame.get_input_state(0, constants.EVENT_L) <= constants.STICK_THRESHOLD \
+            and self._input_frame.get_input_state(0, constants.EVENT_R) <= constants.STICK_THRESHOLD
