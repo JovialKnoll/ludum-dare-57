@@ -12,7 +12,7 @@ from .explosion import Explosion
 class Shot(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
-    _IMAGE_SECTION_SIZE = (5, 5)
+    _IMAGE_SECTION_SIZE = (9, 9)
     _COLLISION_MASK_LOCATION = constants.SHOT_MASK
     _COLLISION_MASK_ALPHA_OR_COLORKEY = constants.COLORKEY
 

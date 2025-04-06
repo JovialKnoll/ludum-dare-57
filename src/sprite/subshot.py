@@ -13,8 +13,8 @@ from .explosion import Explosion
 class SubShot(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
-    _IMAGE_SECTION_SIZE = (5, 5)
-    _COLLISION_MASK_LOCATION = constants.SHOT_MASK
+    _IMAGE_SECTION_SIZE = (9, 9)
+    _COLLISION_MASK_LOCATION = constants.SHOT
     _COLLISION_MASK_ALPHA_OR_COLORKEY = constants.COLORKEY
 
     _JERK = 0.001 * 0.0004
@@ -40,9 +40,10 @@ class SubShot(jovialengine.GameSprite):
     def _start(self, mode):
         ship_pos = mode.ship.rect.center
         self_pos = self.rect.center
-        self.angle = math.degrees(
-            math.atan2(self_pos[1] - ship_pos[1], self_pos[0] - ship_pos[0])
-        ) + 180
+        rads = math.atan2(self_pos[1] - ship_pos[1], self_pos[0] - ship_pos[0])
+        rads %= 2 * math.pi
+        self.angle = 180 - math.degrees(rads)
+        print(self.angle)
         sublaunch = jovialengine.load.sound(constants.SUBLAUNCH)
         sublaunch.play()
 
@@ -54,14 +55,12 @@ class SubShot(jovialengine.GameSprite):
         distance = dt * self._speed + (old_accel + self._accel) * dt * dt / 4
         self._speed += dt * self._accel
         self._speed = min(self._speed, self._MAX_SPEED)
-        distance = min(distance, dt * self._MAX_SPEED)
+        distance = min(-distance, dt * self._MAX_SPEED)
         vec = utility.angle_vector(distance, self.angle)
         self.rect.move_ip(vec.x, vec.y)
-        # shot sinking
-        self.rect.move_ip(0, dt * 0.001 * 20)
         # aging
         self._age += dt
-        new_seq = (self._age // 200) % 2
+        new_seq = (self._age // 100) % 2
         if self.seq != new_seq:
             self.seq = new_seq
         # check bounds
@@ -69,10 +68,9 @@ class SubShot(jovialengine.GameSprite):
         if self.rect.top > space_size[1] \
                 or self.rect.right < 0 or self.rect.left > space_size[0]:
             self.kill()
-        if self.rect.top < constants.HORIZON:
+        if self.rect.centery <= constants.HORIZON:
             self.kill()
-            # maybe switch to midtop?
-            explosion = Explosion(center=self.rect.center)
+            explosion = Explosion(center=self.rect.midbottom)
             explosion.start()
 
     def collide_Ship(self, other: Ship):

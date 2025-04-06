@@ -6,11 +6,11 @@ from .explosion import Explosion
 class Ship(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHIP
     _ALPHA_OR_COLORKEY = constants.COLORKEY
-    _COLLISION_MASK_LOCATION = constants.SHIP
+    _COLLISION_MASK_LOCATION = constants.SHIP_MASK
     _COLLISION_MASK_ALPHA_OR_COLORKEY = constants.COLORKEY
     _GETS_INPUT = True
 
-    _SPEED = 0.001 * 20
+    _SPEED = 0.001 * 100
 
     def update(self, dt, camera):
         dx = 0

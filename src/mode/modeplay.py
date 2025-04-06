@@ -15,7 +15,7 @@ class ModePlay(ModeScreenSize):
     _ANGLE_BASIS = 0.001 * 90
     _MAX_ANGLE_VEL = _ANGLE_BASIS * 2
     _SHOT_INIT_DISTANCE = 12
-    _MAX_SHOTS = 3
+    _MAX_SHOTS = 5
     __slots__ = (
         '_time',
         'ship',
@@ -27,6 +27,7 @@ class ModePlay(ModeScreenSize):
 
     def __init__(self):
         super().__init__()
+        random.seed()
         # setup background
         title_screen = jovialengine.load.image(constants.TITLE_SCREEN)
         self._background.blit(title_screen, (0, -260))
@@ -41,8 +42,7 @@ class ModePlay(ModeScreenSize):
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
         self._next_sub_positions = list(range(18))
-        for i in range(18):
-            self._spawn_sub(1.0)
+        self._spawn_sub(1.0)
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
