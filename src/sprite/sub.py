@@ -16,8 +16,6 @@ class Sub(jovialengine.GameSprite):
     def __init__(self, speed: float, **kwargs):
         super().__init__(**kwargs)
         self._speed = speed
-
-    def _start(self, mode):
         if self._speed > 0:
             # if going right flip so facing right
             self.image = jovialengine.load.flip(self.image, True, False)
