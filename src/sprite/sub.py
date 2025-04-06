@@ -25,6 +25,7 @@ class Sub(jovialengine.GameSprite):
             self.mask = jovialengine.load.mask_surface(self._mask_image)
 
     def update(self, dt, camera):
+        self.rect.move_ip(self._speed, 0)
         space_size = jovialengine.get_current_mode().get_space_size()
         if (self._speed < 0 and self.rect.right < 0) \
                 or (self._speed > 0 and self.rect.left > space_size[0]):
