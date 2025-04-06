@@ -16,6 +16,7 @@ class ModePlay(ModeScreenSize):
     _SHOT_INIT_DISTANCE = 12
     _MAX_SHOTS = 3
     __slots__ = (
+        '_time',
         '_ship',
         '_shots',
         '_arrow_vel',
@@ -31,19 +32,15 @@ class ModePlay(ModeScreenSize):
             constants.WATER_BLUE,
             (0, self._HORIZON, self._SPACE_SIZE[0], self._SPACE_SIZE[1]))
         # setup game objects
+        self._time = 0
         self._ship = sprite.Ship(midbottom=(self._SPACE_SIZE[0] // 2, self._HORIZON))
         self._ship.start(self)
         self._shots: pygame.sprite.Group[sprite.Shot] = pygame.sprite.Group()
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
-        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2))
-        s.start(self)
-        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2 + 40))
-        s.start(self)
-        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2 + 80))
-        s.start(self)
-        s = sprite.Sub(0, center=(self._SPACE_SIZE[0] // 2, self._SPACE_SIZE[1] // 2 + 120))
-        s.start(self)
+
+        for i in range(18):
+            self._spawn_sub(1.0, i, False)
 
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
@@ -54,6 +51,7 @@ class ModePlay(ModeScreenSize):
                 self._shots.add(shot)
 
     def _update_pre_sprites(self, dt):
+        # aiming
         self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
         accel_amount = dt * self._ANGLE_BASIS / 50
@@ -92,6 +90,8 @@ class ModePlay(ModeScreenSize):
         self.arrow_angle = jovialengine.utility.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
         for shot in self._shots.sprites():
             shot.set_angle(self.arrow_angle)
+        # time progression
+        self._time += dt
 
     def _draw_pre_sprites(self, screen, offset):
         if self._ship.alive():
@@ -149,3 +149,21 @@ class ModePlay(ModeScreenSize):
         return len(self._shots) < self._MAX_SHOTS \
             and self._input_frame.get_input_state(0, constants.EVENT_L) <= constants.STICK_THRESHOLD \
             and self._input_frame.get_input_state(0, constants.EVENT_R) <= constants.STICK_THRESHOLD
+
+    def _spawn_sub(self, speed_factor: float, position_factor: int, on_right: bool):
+        # speed_factor=0.0: 0.001 * 120
+        # speed_factor=1.0: 0.001 * 200
+        # continuously varying speeds
+        speed = 0.001 * (120 + speed_factor * 80)
+        # position_factor=0: 181
+        # position_factor=17: 351
+        # 18 possible positions
+        position = (
+            self._SPACE_SIZE[0] if on_right else 0,
+            self._SPACE_SIZE[1] // 2 + 10 * position_factor + 1,
+        )
+        if on_right:
+            s = sprite.Sub(speed * -1, topleft=position)
+        else:
+            s = sprite.Sub(speed, topright=position)
+        s.start(self)
