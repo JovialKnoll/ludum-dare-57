@@ -14,7 +14,8 @@ class ModePlay(ModeScreenSize):
     _ANGLE_CAP_RIGHT = 180 - _ANGLE_CAP_LEFT
     _ANGLE_BASIS = 0.001 * 90
     _MAX_ANGLE_VEL = _ANGLE_BASIS * 2
-    _SHOT_INIT_DISTANCE = 12
+    _SHOT_INIT_DISTANCE = 4
+    _SHOT_TAIL_LENGTH = 9
     _MAX_SHOTS = 5
     __slots__ = (
         '_time',
@@ -122,16 +123,16 @@ class ModePlay(ModeScreenSize):
     def _draw_post_sprites(self, screen, offset):
         for shot in self._shots.sprites():
             center = pygame.Vector2(shot.rect.center) + offset
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (-1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (0, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (-1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (-1, -1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_INIT_DISTANCE - 3, center + (1, -1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (0, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, 1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, 0))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, -1))
+            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, -1))
             color = constants.GREY if shot.steering else constants.DARK_GREY
-            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_INIT_DISTANCE - 2, center + (0, -1))
-            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_INIT_DISTANCE - 2, center)
+            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_TAIL_LENGTH + 1, center + (0, -1))
+            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_TAIL_LENGTH + 1, center)
 
     def _draw_post_camera(self, screen: pygame.Surface):
         font_wrap = jovialengine.get_default_font_wrap()

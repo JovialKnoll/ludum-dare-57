@@ -25,7 +25,7 @@ class Sub(jovialengine.GameSprite):
             self.image = jovialengine.load.flip(self.image, True, False)
             self._mask_image = jovialengine.load.flip(self._mask_image, True, False)
             self.mask = jovialengine.load.mask_surface(self._mask_image)
-        self._countdown = random.randint(900, 1100)
+        self._countdown = random.randint(1400, 1600)
 
     def update(self, dt, camera):
         self.rect.move_ip(self._speed, 0)
@@ -39,7 +39,7 @@ class Sub(jovialengine.GameSprite):
                 pos = self.rect.midright if self._speed > 0 else self.rect.midleft
                 shot = SubShot(center=pos)
                 shot.start()
-                self._countdown += random.randint(1900, 2100)
+                self._countdown += random.randint(2400, 2600)
 
     def collide_Explosion(self, other: Explosion):
         self.kill()
