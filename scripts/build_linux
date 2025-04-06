@@ -8,24 +8,24 @@ source src/venv/bin/activate
 # get pyinstaller
 pip install pyinstaller
 # create spec file
-pyinstaller --clean -ywF -i src/icon.ico -n DEPTH_CHARGE src/main.py
+pyinstaller --clean -ywF -i src/icon.ico -n depth-charge src/main.py
 # build exe
-pyinstaller -y DEPTH_CHARGE.spec
+pyinstaller -y depth-charge.spec
 # unix setup
-mv dist/DEPTH_CHARGE dist/DEPTH_CHARGE_e
-mkdir dist/DEPTH_CHARGE
-mv dist/DEPTH_CHARGE_e dist/DEPTH_CHARGE/DEPTH_CHARGE
+mv dist/depth-charge dist/depth-charge_e
+mkdir dist/depth-charge
+mv dist/depth-charge_e dist/depth-charge/depth-charge
 # copy in assets
-cp -r src/assets dist/DEPTH_CHARGE/assets
+cp -r src/assets dist/depth-charge/assets
 # copy in license
-cp LICENSE.txt dist/DEPTH_CHARGE/
+cp LICENSE.txt dist/depth-charge/
 # copy in readme
-cp README.txt dist/DEPTH_CHARGE/
+cp README.txt dist/depth-charge/
 # linux cleanup
-sed -i 's/DEPTH_CHARGE.exe/DEPTH_CHARGE/g' dist/DEPTH_CHARGE/README.txt
+sed -i 's/depth-charge.exe/depth-charge/g' dist/depth-charge/README.txt
 # unix final
-chmod +x dist/DEPTH_CHARGE
+chmod +x dist/depth-charge
 # cleanup
 deactivate
 rm -r build
-rm DEPTH_CHARGE.spec
+rm depth-charge.spec

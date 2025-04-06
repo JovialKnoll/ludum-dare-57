@@ -1,7 +1,7 @@
 DEPTH CHARGE
 
 Files and Folders:
-  DEPTH_CHARGE.exe
+  depth-charge.exe
     - game executable - run this!
   config.ini
     - will be created automatically

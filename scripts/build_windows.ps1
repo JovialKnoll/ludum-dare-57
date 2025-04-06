@@ -6,20 +6,20 @@ src/venv/Scripts/activate.ps1
 # get pyinstaller
 pip install pyinstaller
 # create spec file
-pyinstaller --clean -ywF -i src/icon.ico -n DEPTH_CHARGE src/main.py
+pyinstaller --clean -ywF -i src/icon.ico -n depth-charge src/main.py
 # build exe
-pyinstaller -y DEPTH_CHARGE.spec
+pyinstaller -y depth-charge.spec
 # windows setup
-mkdir dist/DEPTH_CHARGE
-mv dist/DEPTH_CHARGE.exe dist/DEPTH_CHARGE/DEPTH_CHARGE.exe
+mkdir dist/depth-charge
+mv dist/depth-charge.exe dist/depth-charge/depth-charge.exe
 # copy in assets
-cp -r src/assets dist/DEPTH_CHARGE/assets
+cp -r src/assets dist/depth-charge/assets
 # copy in license
-cp LICENSE.txt dist/DEPTH_CHARGE/
+cp LICENSE.txt dist/depth-charge/
 # copy in readme
-cp README.txt dist/DEPTH_CHARGE/
+cp README.txt dist/depth-charge/
 # cleanup
 deactivate
 rm -r build
-rm DEPTH_CHARGE.spec
+rm depth-charge.spec
 cd scripts

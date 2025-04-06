@@ -13,18 +13,18 @@ jobs:
     uses: JovialKnoll/workflows/.github/workflows/build-python.yml@master
     needs: create-release
     with:
-      project_name: DEPTH_CHARGE
+      project_name: depth-charge
       python_version: '3.13'
       upload_url: ${{ needs.create-release.outputs.upload_url }}
 
-#  upload-butler:
-#    uses: JovialKnoll/workflows/.github/workflows/upload-butler.yml@master
-#    needs: build-python
-#    with:
-#      itch_user: jovialknoll
-#      project_name: DEPTH_CHARGE
-#      release_asset_url_ubuntu_latest: ${{ needs.build-python.outputs.release_asset_url_ubuntu_latest }}
-#      release_asset_url_macos_latest: ${{ needs.build-python.outputs.release_asset_url_macos_latest }}
-#      release_asset_url_windows_latest: ${{ needs.build-python.outputs.release_asset_url_windows_latest }}
-#    secrets:
-#      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+  upload-butler:
+    uses: JovialKnoll/workflows/.github/workflows/upload-butler.yml@master
+    needs: build-python
+    with:
+      itch_user: jovialknoll
+      project_name: depth-charge
+      release_asset_url_ubuntu_latest: ${{ needs.build-python.outputs.release_asset_url_ubuntu_latest }}
+      release_asset_url_macos_latest: ${{ needs.build-python.outputs.release_asset_url_macos_latest }}
+      release_asset_url_windows_latest: ${{ needs.build-python.outputs.release_asset_url_windows_latest }}
+    secrets:
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
