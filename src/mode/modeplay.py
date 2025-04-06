@@ -178,9 +178,7 @@ class ModePlay(ModeScreenSize):
 
     def _can_fire(self):
         return self.ship.alive() \
-            and len(self._shots) < self._MAX_SHOTS \
-            and self._input_frame.get_input_state(0, constants.EVENT_L) <= constants.STICK_THRESHOLD \
-            and self._input_frame.get_input_state(0, constants.EVENT_R) <= constants.STICK_THRESHOLD
+            and len(self._shots) < self._MAX_SHOTS
 
     def _spawn_sub(self, speed_factor: float):
         if self.ship.alive():
