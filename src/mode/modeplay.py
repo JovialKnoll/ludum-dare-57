@@ -46,11 +46,11 @@ class ModePlay(ModeScreenSize):
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
         self._next_sub_positions = list(range(18))
-        self._spawn_sub(1.0)
-        self._spawn_sub(1.1)
-        self._spawn_sub(1.2)
-        self._spawn_sub(1.3)
-        self._spawn_sub(1.4)
+        self._spawn_sub()
+        self._spawn_sub()
+        self._spawn_sub()
+        self._spawn_sub()
+        self._spawn_sub()
 
     def _take_event(self, event: pygame.event.Event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
@@ -186,8 +186,19 @@ class ModePlay(ModeScreenSize):
         return self.ship.alive() \
             and len(self._shots) < self._MAX_SHOTS
 
-    def _spawn_sub(self, speed_factor: float):
+    def _spawn_sub(self):
         if self.ship.alive():
+            speed_factor = 0
+            if self._time > 1000 * 60 * 4:
+                speed_factor = random.random() * 2 + random.random() * 2
+            if self._time > 1000 * 60 * 3:
+                speed_factor = random.random() + random.random() + random.random()
+            elif self._time > 1000 * 60 * 2:
+                speed_factor = random.random() * 2
+            elif self._time > 1000 * 60 * 1:
+                speed_factor = random.random()
+            elif self._time > 1000 * 30:
+                speed_factor = random.random() * 0.5
             this_pos = self._next_sub_positions.pop()
             random.shuffle(self._next_sub_positions)
             self._next_sub_positions.insert(0, this_pos)

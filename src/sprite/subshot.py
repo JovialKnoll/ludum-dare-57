@@ -36,7 +36,7 @@ class SubShot(jovialengine.GameSprite):
         self._accel = self._INITIAL_ACCEL
         self._speed = 0.001 * (240 - random.randrange(120))
         self._age = 0
-        self._jerk = 0.001 * (0.0001 * random.randint(3, 4))
+        self._jerk = 0.001 * (0.00005 + 0.0001 * random.randint(2, 3))
 
     def _start(self, mode):
         ship_pos = mode.ship.rect.center
