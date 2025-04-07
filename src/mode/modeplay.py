@@ -107,7 +107,13 @@ class ModePlay(ModeScreenSize):
         self._time += dt
         if self.ship.alive():
             jovialengine.get_state().score += dt / 1000
-        if self._subs_deployed < 1: #function based on self._time goes here for subs
+        seconds = self._time // 1000
+        expected_subs = seconds // 5
+        if seconds >= 15:
+            expected_subs += (seconds - 5) // 10
+        if seconds >= 45:
+            expected_subs += (seconds - 43) // 5
+        if self._subs_deployed < expected_subs:
             self._spawn_sub()
         # ending
         if not self.sprites_all:
