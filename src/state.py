@@ -38,9 +38,10 @@ class State(jovialengine.Saveable):
 
     def enter_score(self):
         int_score = int(self.score)
-        self.high_scores.append(int_score)
-        self.high_scores.sort(reverse=True)
-        self.score = 0
-        if self.high_scores[0] == int_score:
+        if int_score > (self.high_scores[0] if self.high_scores else 0):
             new_high_score = jovialengine.load.sound(constants.NEW_HIGH_SCORE)
             new_high_score.play()
+        self.high_scores.append(int_score)
+        self.high_scores = list(set(self.high_scores))
+        self.high_scores.sort(reverse=True)
+        self.score = 0
