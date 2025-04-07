@@ -43,7 +43,6 @@ class SubShot(jovialengine.GameSprite):
         rads = math.atan2(self_pos[1] - ship_pos[1], self_pos[0] - ship_pos[0])
         rads %= 2 * math.pi
         self.angle = 180 - math.degrees(rads)
-        print(self.angle)
         sublaunch = jovialengine.load.sound(constants.SUBLAUNCH)
         sublaunch.play()
 
