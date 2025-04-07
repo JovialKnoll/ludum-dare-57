@@ -51,10 +51,6 @@ class ModePlay(ModeScreenSize):
         self._spawn_sub()
         self._subs_deployed = 0
 
-    def _take_event(self, event: pygame.event.Event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-            self._end_mode()
-
     def _take_frame(self, input_frame):
         if input_frame.was_input_pressed(constants.EVENT_S):
             if self._can_fire():
@@ -122,8 +118,8 @@ class ModePlay(ModeScreenSize):
         if self._subs_deployed < expected_subs:
             self._spawn_sub()
         # ending
-        if not self.sprites_all:
-            self._end_mode()
+        if not self.ship.alive() and all(isinstance(spr, sprite.Sub) for spr in self.sprites_all.sprites()):
+            self.next_mode = ModeEnding()
 
     def _draw_pre_sprites(self, screen, offset):
         if self.ship.alive():
@@ -238,6 +234,3 @@ class ModePlay(ModeScreenSize):
         else:
             s = sprite.Sub(speed, topright=position)
         s.start(self)
-
-    def _end_mode(self):
-        self.next_mode = ModeEnding()
