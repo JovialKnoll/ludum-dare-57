@@ -25,6 +25,7 @@ class ModePlay(ModeScreenSize):
         '_arrow_vel',
         'arrow_angle',
         '_next_sub_positions',
+        '_subs_deployed',
     )
 
     def __init__(self):
@@ -46,11 +47,9 @@ class ModePlay(ModeScreenSize):
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
         self._next_sub_positions = list(range(18))
+        self._subs_deployed = 0
         self._spawn_sub()
-        self._spawn_sub()
-        self._spawn_sub()
-        self._spawn_sub()
-        self._spawn_sub()
+        self._subs_deployed = 0
 
     def _take_event(self, event: pygame.event.Event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
@@ -108,6 +107,8 @@ class ModePlay(ModeScreenSize):
         self._time += dt
         if self.ship.alive():
             jovialengine.get_state().score += dt / 1000
+        if self._subs_deployed < 1: #function based on self._time goes here for subs
+            self._spawn_sub()
         # ending
         if not self.sprites_all:
             self._end_mode()
@@ -206,6 +207,7 @@ class ModePlay(ModeScreenSize):
                 speed_factor,
                 this_pos,
                 bool(random.getrandbits(1)))
+            self._subs_deployed += 1
 
     def _spawn_sub_base(self, speed_factor: float, position_factor: int, on_right: bool):
         # speed_factor=0.0: 0.001 * 120

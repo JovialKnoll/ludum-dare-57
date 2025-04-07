@@ -10,7 +10,6 @@ from .ship import Ship
 from .explosion import Explosion
 
 
-
 class SubShot(jovialengine.GameSprite):
     _IMAGE_LOCATION = constants.SHOT
     _ALPHA_OR_COLORKEY = constants.COLORKEY
