@@ -1,6 +1,7 @@
 import random
 
 import jovialengine
+import pygame
 
 import constants
 from .explosion import Explosion
@@ -45,3 +46,11 @@ class Sub(jovialengine.GameSprite):
         if self.alive():
             jovialengine.get_state().score += constants.SCORE_SUB_EXPLOSION
         self.kill()
+
+    def collide_Sub(self, other: 'Sub'):
+        self.kill()
+        if other.alive():
+            other.kill()
+            pos = (pygame.Vector2(self.rect.center) + pygame.Vector2(other.rect.center)) / 2
+            explosion = Explosion(center=pos)
+            explosion.start()
