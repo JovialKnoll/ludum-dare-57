@@ -47,6 +47,10 @@ class ModePlay(ModeScreenSize):
         self.arrow_angle: float = 90
         self._next_sub_positions = list(range(18))
         self._spawn_sub(1.0)
+        self._spawn_sub(1.1)
+        self._spawn_sub(1.2)
+        self._spawn_sub(1.3)
+        self._spawn_sub(1.4)
 
     def _take_event(self, event: pygame.event.Event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
@@ -184,9 +188,12 @@ class ModePlay(ModeScreenSize):
 
     def _spawn_sub(self, speed_factor: float):
         if self.ship.alive():
+            this_pos = self._next_sub_positions.pop()
+            random.shuffle(self._next_sub_positions)
+            self._next_sub_positions.insert(0, this_pos)
             self._spawn_sub_base(
                 speed_factor,
-                self._next_sub_positions.pop(),
+                this_pos,
                 bool(random.getrandbits(1)))
 
     def _spawn_sub_base(self, speed_factor: float, position_factor: int, on_right: bool):
