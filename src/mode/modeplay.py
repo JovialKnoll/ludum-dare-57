@@ -108,11 +108,17 @@ class ModePlay(ModeScreenSize):
         if self.ship.alive():
             jovialengine.get_state().score += dt / 1000
         seconds = self._time // 1000
+        # one every 5 seconds
         expected_subs = seconds // 5
         if seconds >= 15:
-            expected_subs += (seconds - 5) // 10
+            # plus another every ten seconds after 15 seconds (offset)
+            expected_subs += (seconds - 12) // 10
         if seconds >= 45:
+            # plus another every 5 seconds after 45 seconds (offset)
             expected_subs += (seconds - 43) // 5
+        if seconds >= 60:
+            # plus and extra 1 second after every minute
+            expected_subs += (seconds - 1) // 60
         if self._subs_deployed < expected_subs:
             self._spawn_sub()
         # ending
