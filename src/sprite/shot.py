@@ -21,6 +21,7 @@ class Shot(jovialengine.GameSprite):
     _MAX_ACCEL = 0.001 * 0.4
     _INITIAL_SPEED = 0.001 * 240
     _MAX_SPEED = 0.001 * 480
+    _SHOT_TAIL_LENGTH = 9
 
     __slots__ = (
         'angle',
@@ -71,6 +72,23 @@ class Shot(jovialengine.GameSprite):
         if self.rect.top > space_size[1] \
                 or self.rect.right < 0 or self.rect.left > space_size[0]:
             self.kill()
+
+    def draw_dynamic(self, screen: pygame.Surface, offset: pygame.typing.IntPoint):
+        center = pygame.Vector2(self.rect.center) + offset
+        self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (-1, 1))
+        self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (0, 1))
+        self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (1, 1))
+        self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (-1, 0))
+        self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (1, 0))
+        self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (-1, -1))
+        self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (1, -1))
+        color = constants.GREY if self.steering else constants.DARK_GREY
+        self._draw_shot_trail(screen, color, self._SHOT_TAIL_LENGTH + 1, center + (0, -1))
+        self._draw_shot_trail(screen, color, self._SHOT_TAIL_LENGTH + 1, center)
+
+    def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike, length: int, start: pygame.typing.Point):
+        end = utility.get_angle_end(start, -length, self.angle)
+        pygame.draw.line(screen, color, start, end)
 
     def collide_Sub(self, other: Sub):
         self.kill()

@@ -16,7 +16,6 @@ class ModePlay(ModeScreenSize):
     _ANGLE_BASIS = 0.001 * 90
     _MAX_ANGLE_VEL = _ANGLE_BASIS * 2
     _SHOT_INIT_DISTANCE = 4
-    _SHOT_TAIL_LENGTH = 9
     _MAX_SHOTS = 5
     __slots__ = (
         '_time',
@@ -129,33 +128,19 @@ class ModePlay(ModeScreenSize):
             color = "red" if self._can_fire() else constants.DARK_RED
             pygame.draw.line(screen, color, start, end)
             # various angles
-            end = self._get_angle_end(start, 20, self._ANGLE_CAP_LEFT)
+            end = utility.get_angle_end(start, 20, self._ANGLE_CAP_LEFT)
             screen.fill("red", (end, (1, 1)))
             screen.fill("red", (end + (1, 0), (1, 1)))
-            end = self._get_angle_end(start, 20, self._ANGLE_CAP_RIGHT)
+            end = utility.get_angle_end(start, 20, self._ANGLE_CAP_RIGHT)
             screen.fill("red", (end, (1, 1)))
             screen.fill("red", (end + (-1, 0), (1, 1)))
-            end = self._get_angle_end(start, 20, 90)
+            end = utility.get_angle_end(start, 20, 90)
             screen.fill("red", (end, (1, 1)))
             screen.fill("red", (end + (0, -1), (1, 1)))
-            end = self._get_angle_end(start, 20, 45)
+            end = utility.get_angle_end(start, 20, 45)
             screen.fill("red", (end, (1, 1)))
-            end = self._get_angle_end(start, 20, 135)
+            end = utility.get_angle_end(start, 20, 135)
             screen.fill("red", (end, (1, 1)))
-
-    def _draw_post_sprites(self, screen, offset):
-        for shot in self._shots.sprites():
-            center = pygame.Vector2(shot.rect.center) + offset
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (0, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, -1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, -1))
-            color = constants.GREY if shot.steering else constants.DARK_GREY
-            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_TAIL_LENGTH + 1, center + (0, -1))
-            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_TAIL_LENGTH + 1, center)
 
     def _draw_post_camera(self, screen: pygame.Surface):
         font_wrap = jovialengine.get_default_font_wrap()
@@ -179,17 +164,8 @@ class ModePlay(ModeScreenSize):
         self._shots.empty()
         del self.ship
 
-    @staticmethod
-    def _get_angle_end(start: pygame.typing.Point, distance: int, angle: float):
-        return utility.angle_vector(distance, angle) + start
-
     def _get_aim_end(self, start: pygame.typing.Point, distance: int):
-        return self._get_angle_end(start, distance, self.arrow_angle)
-
-    def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike,
-                         angle: float, length: int, start: pygame.typing.Point):
-        end = self._get_angle_end(start, -length, angle)
-        pygame.draw.line(screen, color, start, end)
+        return utility.get_angle_end(start, distance, self.arrow_angle)
 
     def _can_fire(self):
         return self.ship.alive() \
