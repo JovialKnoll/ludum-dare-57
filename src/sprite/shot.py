@@ -74,7 +74,7 @@ class Shot(jovialengine.GameSprite):
             self.kill()
 
     def draw_dynamic(self, screen: pygame.Surface, offset: pygame.typing.IntPoint):
-        center = pygame.Vector2(self.rect.center) + offset
+        center = round(pygame.Vector2(self.rect.topleft)) + (4, 4) + offset
         self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (-1, 1))
         self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (0, 1))
         self._draw_shot_trail(screen, constants.DARK_GREY, self._SHOT_TAIL_LENGTH, center + (1, 1))
