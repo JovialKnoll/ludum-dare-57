@@ -43,11 +43,10 @@ class Shot(jovialengine.GameSprite):
         launch = jovialengine.load.sound(constants.LAUNCH)
         launch.play()
 
-    def set_angle(self, angle):
-        if self.steering:
-            self.angle = angle
-
     def update(self, dt, camera):
+        # get angle
+        if self.steering:
+            self.angle = jovialengine.get_current_mode().arrow_angle
         # shot thrust
         old_accel = self._accel
         self._accel += dt * self._JERK
