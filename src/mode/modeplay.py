@@ -20,7 +20,6 @@ class ModePlay(ModeScreenSize):
     __slots__ = (
         '_time',
         'ship',
-        '_shots',
         '_arrow_vel',
         'arrow_angle',
         '_next_sub_positions',
@@ -39,10 +38,10 @@ class ModePlay(ModeScreenSize):
             constants.WATER_BLUE,
             (0, constants.HORIZON, self._SPACE_SIZE[0], self._SPACE_SIZE[1]))
         # setup game objects
+        sprite.Shot.count = 0
         self._time = 0
         self.ship = sprite.Ship(midbottom=(self._SPACE_SIZE[0] // 2, constants.HORIZON))
         self.ship.start(self)
-        self._shots: pygame.sprite.Group[sprite.Shot] = pygame.sprite.Group()
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
         self._next_sub_positions = list(range(18))
@@ -56,7 +55,6 @@ class ModePlay(ModeScreenSize):
                 pos = self._get_aim_end(self.ship.rect.midbottom, self._SHOT_INIT_DISTANCE)
                 shot = sprite.Shot(self.arrow_angle, center=pos)
                 shot.start(self)
-                self._shots.add(shot)
 
     def _update_pre_sprites(self, dt):
         # aiming
@@ -159,7 +157,6 @@ class ModePlay(ModeScreenSize):
         )
 
     def _cleanup(self):
-        self._shots.empty()
         del self.ship
 
     def _get_aim_end(self, start: pygame.typing.Point, distance: int):
@@ -167,7 +164,7 @@ class ModePlay(ModeScreenSize):
 
     def _can_fire(self):
         return self.ship.alive() \
-            and len(self._shots) < self._MAX_SHOTS
+            and sprite.Shot.count < self._MAX_SHOTS
 
     def _spawn_sub(self):
         if self.ship.alive():

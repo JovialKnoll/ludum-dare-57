@@ -23,6 +23,8 @@ class Shot(jovialengine.GameSprite):
     _MAX_SPEED = 0.001 * 480
     _SHOT_TAIL_LENGTH = 9
 
+    count = 0
+
     __slots__ = (
         'angle',
         '_accel',
@@ -42,6 +44,7 @@ class Shot(jovialengine.GameSprite):
     def _start(self, mode):
         launch = jovialengine.load.sound(constants.LAUNCH)
         launch.play()
+        Shot.count += 1
 
     def update(self, dt, camera):
         # get angle
@@ -88,6 +91,10 @@ class Shot(jovialengine.GameSprite):
     def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike, length: int, start: pygame.typing.Point):
         end = utility.get_angle_end(start, -length, self.angle)
         pygame.draw.line(screen, color, start, end)
+
+    def kill(self):
+        super().kill()
+        Shot.count -= 1
 
     def collide_Sub(self, other: Sub):
         self.kill()
