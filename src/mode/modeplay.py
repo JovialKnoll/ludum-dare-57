@@ -82,7 +82,7 @@ class ModePlay(ModeScreenSize):
             vel_change = 0
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
-        self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._MAX_ANGLE_VEL, self._MAX_ANGLE_VEL)
+        self._arrow_vel = pygame.math.clamp(self._arrow_vel, -self._MAX_ANGLE_VEL, self._MAX_ANGLE_VEL)
         self.arrow_angle += dt * (self._arrow_vel - old_vel) / 2
         if clamp:
             if abs(self.arrow_angle - 90) <= dt * self._MAX_ANGLE_VEL:
@@ -93,7 +93,7 @@ class ModePlay(ModeScreenSize):
                 self._arrow_vel = min(0.0, self._arrow_vel + (accel_amount * 2))
             if self._arrow_vel > 0:
                 self._arrow_vel = max(0.0, self._arrow_vel - (accel_amount * 2))
-        self.arrow_angle = jovialengine.utility.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
+        self.arrow_angle = pygame.math.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
         # time progression
         self._time += dt
         if self.ship.alive():
