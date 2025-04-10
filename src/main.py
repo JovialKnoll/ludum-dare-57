@@ -23,7 +23,8 @@ game = jovialengine.init(
     constants.FONT,
     constants.FONT_SIZE,
     constants.FONT_HEIGHT,
-    constants.FONT_ANTIALIAS
+    constants.FONT_ANTIALIAS,
+    restart_mode_cls=mode.ModeOpening1
 )
 while game.run():
     pass

@@ -100,5 +100,5 @@ class ModeEnding(ModeOpening, jovialengine.Saveable):
             next_midtop = high_score_rect.midbottom
 
     def _switch_mode(self):
-        next_mode_cls = jovialengine.get_start_mode_cls()
+        next_mode_cls = jovialengine.get_restart_mode_cls()
         self.next_mode = next_mode_cls()
