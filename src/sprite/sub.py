@@ -1,4 +1,5 @@
 import random
+from typing import Self
 
 import jovialengine
 import pygame
@@ -47,7 +48,7 @@ class Sub(jovialengine.GameSprite):
             jovialengine.get_state().score += constants.SCORE_SUB_EXPLOSION
         self.kill()
 
-    def collide_Sub(self, other: 'Sub'):
+    def collide_Sub(self, other: Self):
         self.kill()
         if other.alive():
             other.kill()
