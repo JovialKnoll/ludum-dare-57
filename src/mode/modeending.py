@@ -2,7 +2,6 @@ import jovialengine
 import pygame
 
 import constants
-import sprite
 from .modeopening import ModeOpening
 
 

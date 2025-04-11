@@ -59,10 +59,7 @@ class ModePlay(ModeScreenSize):
     def _update_pre_sprites(self, dt):
         # ending
         if not self.ship.alive():
-            if all(isinstance(spr, sprite.Sub) for spr in self.sprites_all.sprites()):
-                self.next_mode = ModeEnding()
-            else:
-                return
+            return
         # aiming
         self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
@@ -117,6 +114,10 @@ class ModePlay(ModeScreenSize):
             expected_subs += (seconds - 1) // 60
         if self._subs_deployed < expected_subs:
             self._spawn_sub()
+
+    def _update_pre_draw(self):
+        if not self.ship.alive() and all(isinstance(spr, sprite.Sub) for spr in self.sprites_all.sprites()):
+            self.next_mode = ModeEnding()
 
     def _draw_pre_sprites(self, screen, offset):
         if self.ship.alive():
