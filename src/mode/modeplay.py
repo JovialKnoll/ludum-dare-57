@@ -57,6 +57,12 @@ class ModePlay(ModeScreenSize):
                 shot.start(self)
 
     def _update_pre_sprites(self, dt):
+        # ending
+        if not self.ship.alive():
+            if all(isinstance(spr, sprite.Sub) for spr in self.sprites_all.sprites()):
+                self.next_mode = ModeEnding()
+            else:
+                return
         # aiming
         self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
@@ -95,9 +101,8 @@ class ModePlay(ModeScreenSize):
                 self._arrow_vel = max(0.0, self._arrow_vel - (accel_amount * 2))
         self.arrow_angle = pygame.math.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
         # time progression
+        jovialengine.get_state().score += dt / 1000
         self._time += dt
-        if self.ship.alive():
-            jovialengine.get_state().score += dt / 1000
         seconds = self._time // 1000
         # one every 5 seconds
         expected_subs = seconds // 5
@@ -112,9 +117,6 @@ class ModePlay(ModeScreenSize):
             expected_subs += (seconds - 1) // 60
         if self._subs_deployed < expected_subs:
             self._spawn_sub()
-        # ending
-        if not self.ship.alive() and all(isinstance(spr, sprite.Sub) for spr in self.sprites_all.sprites()):
-            self.next_mode = ModeEnding()
 
     def _draw_pre_sprites(self, screen, offset):
         if self.ship.alive():
@@ -167,26 +169,25 @@ class ModePlay(ModeScreenSize):
             and sprite.Shot.count < self._MAX_SHOTS
 
     def _spawn_sub(self):
-        if self.ship.alive():
-            speed_factor = 0
-            if self._time > 1000 * 60 * 4:
-                speed_factor = random.random() * 2 + random.random() * 2
-            if self._time > 1000 * 60 * 3:
-                speed_factor = random.random() + random.random() + random.random()
-            elif self._time > 1000 * 60 * 2:
-                speed_factor = random.random() * 2
-            elif self._time > 1000 * 60 * 1:
-                speed_factor = random.random()
-            elif self._time > 1000 * 30:
-                speed_factor = random.random() * 0.5
-            this_pos = self._next_sub_positions.pop()
-            random.shuffle(self._next_sub_positions)
-            self._next_sub_positions.insert(0, this_pos)
-            self._spawn_sub_base(
-                speed_factor,
-                this_pos,
-                bool(random.getrandbits(1)))
-            self._subs_deployed += 1
+        speed_factor = 0
+        if self._time > 1000 * 60 * 4:
+            speed_factor = random.random() * 2 + random.random() * 2
+        if self._time > 1000 * 60 * 3:
+            speed_factor = random.random() + random.random() + random.random()
+        elif self._time > 1000 * 60 * 2:
+            speed_factor = random.random() * 2
+        elif self._time > 1000 * 60 * 1:
+            speed_factor = random.random()
+        elif self._time > 1000 * 30:
+            speed_factor = random.random() * 0.5
+        this_pos = self._next_sub_positions.pop()
+        random.shuffle(self._next_sub_positions)
+        self._next_sub_positions.insert(0, this_pos)
+        self._spawn_sub_base(
+            speed_factor,
+            this_pos,
+            bool(random.getrandbits(1)))
+        self._subs_deployed += 1
 
     def _spawn_sub_base(self, speed_factor: float, position_factor: int, on_right: bool):
         # speed_factor=0.0: 0.001 * 120
