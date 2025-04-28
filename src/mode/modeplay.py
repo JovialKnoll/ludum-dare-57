@@ -16,12 +16,10 @@ class ModePlay(ModeScreenSize):
     _ANGLE_BASIS = 0.001 * 90
     _MAX_ANGLE_VEL = _ANGLE_BASIS * 2
     _SHOT_INIT_DISTANCE = 4
-    _SHOT_TAIL_LENGTH = 9
     _MAX_SHOTS = 5
     __slots__ = (
         '_time',
         'ship',
-        '_shots',
         '_arrow_vel',
         'arrow_angle',
         '_next_sub_positions',
@@ -30,6 +28,7 @@ class ModePlay(ModeScreenSize):
 
     def __init__(self):
         super().__init__()
+        jovialengine.get_state().score = 0
         random.seed()
         announcement = jovialengine.load.sound(constants.ANNOUNCEMENT)
         announcement.play()
@@ -40,10 +39,10 @@ class ModePlay(ModeScreenSize):
             constants.WATER_BLUE,
             (0, constants.HORIZON, self._SPACE_SIZE[0], self._SPACE_SIZE[1]))
         # setup game objects
+        sprite.Shot.count = 0
         self._time = 0
         self.ship = sprite.Ship(midbottom=(self._SPACE_SIZE[0] // 2, constants.HORIZON))
         self.ship.start(self)
-        self._shots: pygame.sprite.Group[sprite.Shot] = pygame.sprite.Group()
         self._arrow_vel: float = 0
         self.arrow_angle: float = 90
         self._next_sub_positions = list(range(18))
@@ -57,9 +56,11 @@ class ModePlay(ModeScreenSize):
                 pos = self._get_aim_end(self.ship.rect.midbottom, self._SHOT_INIT_DISTANCE)
                 shot = sprite.Shot(self.arrow_angle, center=pos)
                 shot.start(self)
-                self._shots.add(shot)
 
     def _update_pre_sprites(self, dt):
+        # ending
+        if not self.ship.alive():
+            return
         # aiming
         self.arrow_angle += dt * self._arrow_vel
         vel_change = 0
@@ -85,7 +86,7 @@ class ModePlay(ModeScreenSize):
             vel_change = 0
         old_vel = self._arrow_vel
         self._arrow_vel += vel_change
-        self._arrow_vel = jovialengine.utility.clamp(self._arrow_vel, -self._MAX_ANGLE_VEL, self._MAX_ANGLE_VEL)
+        self._arrow_vel = pygame.math.clamp(self._arrow_vel, -self._MAX_ANGLE_VEL, self._MAX_ANGLE_VEL)
         self.arrow_angle += dt * (self._arrow_vel - old_vel) / 2
         if clamp:
             if abs(self.arrow_angle - 90) <= dt * self._MAX_ANGLE_VEL:
@@ -96,13 +97,10 @@ class ModePlay(ModeScreenSize):
                 self._arrow_vel = min(0.0, self._arrow_vel + (accel_amount * 2))
             if self._arrow_vel > 0:
                 self._arrow_vel = max(0.0, self._arrow_vel - (accel_amount * 2))
-        self.arrow_angle = jovialengine.utility.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
-        for shot in self._shots.sprites():
-            shot.set_angle(self.arrow_angle)
+        self.arrow_angle = pygame.math.clamp(self.arrow_angle, self._ANGLE_CAP_LEFT, self._ANGLE_CAP_RIGHT)
         # time progression
+        jovialengine.get_state().score += dt / 1000
         self._time += dt
-        if self.ship.alive():
-            jovialengine.get_state().score += dt / 1000
         seconds = self._time // 1000
         # one every 5 seconds
         expected_subs = seconds // 5
@@ -117,7 +115,8 @@ class ModePlay(ModeScreenSize):
             expected_subs += (seconds - 1) // 60
         if self._subs_deployed < expected_subs:
             self._spawn_sub()
-        # ending
+
+    def _update_pre_draw(self):
         if not self.ship.alive() and all(isinstance(spr, sprite.Sub) for spr in self.sprites_all.sprites()):
             self.next_mode = ModeEnding()
 
@@ -129,33 +128,19 @@ class ModePlay(ModeScreenSize):
             color = "red" if self._can_fire() else constants.DARK_RED
             pygame.draw.line(screen, color, start, end)
             # various angles
-            end = self._get_angle_end(start, 20, self._ANGLE_CAP_LEFT)
+            end = utility.get_angle_end(start, 20, self._ANGLE_CAP_LEFT)
             screen.fill("red", (end, (1, 1)))
             screen.fill("red", (end + (1, 0), (1, 1)))
-            end = self._get_angle_end(start, 20, self._ANGLE_CAP_RIGHT)
+            end = utility.get_angle_end(start, 20, self._ANGLE_CAP_RIGHT)
             screen.fill("red", (end, (1, 1)))
             screen.fill("red", (end + (-1, 0), (1, 1)))
-            end = self._get_angle_end(start, 20, 90)
+            end = utility.get_angle_end(start, 20, 90)
             screen.fill("red", (end, (1, 1)))
             screen.fill("red", (end + (0, -1), (1, 1)))
-            end = self._get_angle_end(start, 20, 45)
+            end = utility.get_angle_end(start, 20, 45)
             screen.fill("red", (end, (1, 1)))
-            end = self._get_angle_end(start, 20, 135)
+            end = utility.get_angle_end(start, 20, 135)
             screen.fill("red", (end, (1, 1)))
-
-    def _draw_post_sprites(self, screen, offset):
-        for shot in self._shots.sprites():
-            center = pygame.Vector2(shot.rect.center) + offset
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (0, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, 1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, 0))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (-1, -1))
-            self._draw_shot_trail(screen, constants.DARK_GREY, shot.angle, self._SHOT_TAIL_LENGTH, center + (1, -1))
-            color = constants.GREY if shot.steering else constants.DARK_GREY
-            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_TAIL_LENGTH + 1, center + (0, -1))
-            self._draw_shot_trail(screen, color, shot.angle, self._SHOT_TAIL_LENGTH + 1, center)
 
     def _draw_post_camera(self, screen: pygame.Surface):
         font_wrap = jovialengine.get_default_font_wrap()
@@ -176,46 +161,35 @@ class ModePlay(ModeScreenSize):
         )
 
     def _cleanup(self):
-        self._shots.empty()
         del self.ship
 
-    @staticmethod
-    def _get_angle_end(start: pygame.typing.Point, distance: int, angle: float):
-        return utility.angle_vector(distance, angle) + start
-
     def _get_aim_end(self, start: pygame.typing.Point, distance: int):
-        return self._get_angle_end(start, distance, self.arrow_angle)
-
-    def _draw_shot_trail(self, screen, color: pygame.typing.ColorLike,
-                         angle: float, length: int, start: pygame.typing.Point):
-        end = self._get_angle_end(start, -length, angle)
-        pygame.draw.line(screen, color, start, end)
+        return utility.get_angle_end(start, distance, self.arrow_angle)
 
     def _can_fire(self):
         return self.ship.alive() \
-            and len(self._shots) < self._MAX_SHOTS
+            and sprite.Shot.count < self._MAX_SHOTS
 
     def _spawn_sub(self):
-        if self.ship.alive():
-            speed_factor = 0
-            if self._time > 1000 * 60 * 4:
-                speed_factor = random.random() * 2 + random.random() * 2
-            if self._time > 1000 * 60 * 3:
-                speed_factor = random.random() + random.random() + random.random()
-            elif self._time > 1000 * 60 * 2:
-                speed_factor = random.random() * 2
-            elif self._time > 1000 * 60 * 1:
-                speed_factor = random.random()
-            elif self._time > 1000 * 30:
-                speed_factor = random.random() * 0.5
-            this_pos = self._next_sub_positions.pop()
-            random.shuffle(self._next_sub_positions)
-            self._next_sub_positions.insert(0, this_pos)
-            self._spawn_sub_base(
-                speed_factor,
-                this_pos,
-                bool(random.getrandbits(1)))
-            self._subs_deployed += 1
+        speed_factor = 0
+        if self._time > 1000 * 60 * 4:
+            speed_factor = random.random() * 2 + random.random() * 2
+        if self._time > 1000 * 60 * 3:
+            speed_factor = random.random() + random.random() + random.random()
+        elif self._time > 1000 * 60 * 2:
+            speed_factor = random.random() * 2
+        elif self._time > 1000 * 60 * 1:
+            speed_factor = random.random()
+        elif self._time > 1000 * 30:
+            speed_factor = random.random() * 0.5
+        this_pos = self._next_sub_positions.pop()
+        random.shuffle(self._next_sub_positions)
+        self._next_sub_positions.insert(0, this_pos)
+        self._spawn_sub_base(
+            speed_factor,
+            this_pos,
+            bool(random.getrandbits(1)))
+        self._subs_deployed += 1
 
     def _spawn_sub_base(self, speed_factor: float, position_factor: int, on_right: bool):
         # speed_factor=0.0: 0.001 * 120
