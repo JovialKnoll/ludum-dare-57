@@ -24,6 +24,7 @@ game = jovialengine.GameBuilder()\
     .set_font_size(constants.FONT_SIZE)\
     .set_font_height(constants.FONT_HEIGHT)\
     .set_font_antialias(constants.FONT_ANTIALIAS)\
+    .set_auto_save()\
     .build()
 while game.run():
     pass
