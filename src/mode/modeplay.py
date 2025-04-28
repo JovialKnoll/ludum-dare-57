@@ -28,6 +28,7 @@ class ModePlay(ModeScreenSize):
 
     def __init__(self):
         super().__init__()
+        jovialengine.get_state().score = 0
         random.seed()
         announcement = jovialengine.load.sound(constants.ANNOUNCEMENT)
         announcement.play()
