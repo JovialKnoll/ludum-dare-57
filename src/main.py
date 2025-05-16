@@ -26,6 +26,7 @@ game = jovialengine.GameBuilder()\
     .set_font_antialias(constants.FONT_ANTIALIAS)\
     .set_auto_save()\
     .set_restart_without_state()\
+    .set_mouse_invisible()\
     .build()
 while game.run():
     pass
