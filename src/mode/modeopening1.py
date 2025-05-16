@@ -48,8 +48,7 @@ class ModeOpening1(ModeOpening, jovialengine.Saveable):
         title_surf = font_wrap.render_inside(
             font_wrap.font.size(constants.TITLE)[0],
             constants.TITLE,
-            constants.DARK_RED,
-            constants.CLOUD_GREY
+            constants.DARK_RED
         )
         title_surf = pygame.transform.scale2x(title_surf)
         title_surf = pygame.transform.rotozoom(title_surf, -1.5, 1)
